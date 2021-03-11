@@ -86,16 +86,20 @@ class DatabaseQuery {
 
 
   // Inserting new Fruit into the database
-  newFruit(Fruit newFruit) async {
+  Future<bool> newFruit(Fruit newFruit) async {
     final db = await database;
     try {
-      // Query for inserting Fruit
-      var res = await db.insert("Fruit", newFruit.toMap());
-      Fluttertoast.showToast(msg: "Added");
-    } on DatabaseException {
+      var checkFruitInDatabase = await db.rawQuery('Select * from Fruit where name=? AND type=? AND date=?',[newFruit.name,newFruit.type,newFruit.date]);
+      if(checkFruitInDatabase.isEmpty){
+        // Query for inserting Fruit
+        var res = await db.insert("Fruit", newFruit.toMap());
+        return true;
+      }
+    }on DatabaseException {
       // If exception is thrown by database
       Fluttertoast.showToast(msg: "Already Exists in your List");
     }
+    return false;
   }
 
   //Updating Fruit in the database using date
