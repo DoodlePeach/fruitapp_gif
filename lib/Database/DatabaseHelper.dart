@@ -21,23 +21,23 @@ class DatabaseQuery {
     // Creating database
     return openDatabase(join(await getDatabasesPath(), "TestDB.db"), version: 1,
         onCreate: (Database db, int version) async {
-          // Creating table and making date as a primary key
-          await db.execute("CREATE TABLE Fruit ("
-              "name TEXT,"
-              "type TEXT,"
-              "comment TEXT,"
-              "date TEXT,"
-              "id INTEGER PRIMARY KEY"
-              ")");
+      // Creating table and making date as a primary key
+      await db.execute("CREATE TABLE Fruit ("
+          "name TEXT,"
+          "type TEXT,"
+          "comment TEXT,"
+          "date TEXT,"
+          "id INTEGER PRIMARY KEY"
+          ")");
 
-          await db.execute("CREATE TABLE MLKG ("
-              "ml TEXT,"
-              "kg TEXT,"
-              "comment TEXT,"
-              "fid INTEGER,"
-              "id INTEGER PRIMARY KEY"
-              ")");
-        });
+      await db.execute("CREATE TABLE MLKG ("
+          "ml TEXT,"
+          "kg TEXT,"
+          "comment TEXT,"
+          "fid INTEGER,"
+          "id INTEGER PRIMARY KEY"
+          ")");
+    });
   }
 
   //*********************************** MLKG Database ******************************//
@@ -59,8 +59,8 @@ class DatabaseQuery {
     final db = await database;
     try {
       //Query for updating MLKG
-      var res = await db.update("MLKG", mlkg.toMap(),
-          where: "id = ?", whereArgs: [mlkg.id]);
+      var res = await db
+          .update("MLKG", mlkg.toMap(), where: "id = ?", whereArgs: [mlkg.id]);
       if (toastOption) Fluttertoast.showToast(msg: "Updated Successfully");
     } on DatabaseException {
       // If exception is thrown by database
@@ -81,21 +81,21 @@ class DatabaseQuery {
     }
   }
 
-
   // ********************************** Fruit Database *************************//
-
 
   // Inserting new Fruit into the database
   Future<bool> newFruit(Fruit newFruit) async {
     final db = await database;
     try {
-      var checkFruitInDatabase = await db.rawQuery('Select * from Fruit where name=? AND type=? AND date=?',[newFruit.name,newFruit.type,newFruit.date]);
-      if(checkFruitInDatabase.isEmpty){
+      var checkFruitInDatabase = await db.rawQuery(
+          'Select * from Fruit where name=? AND type=? AND date=?',
+          [newFruit.name, newFruit.type, newFruit.date]);
+      if (checkFruitInDatabase.isEmpty) {
         // Query for inserting Fruit
         var res = await db.insert("Fruit", newFruit.toMap());
         return true;
       }
-    }on DatabaseException {
+    } on DatabaseException {
       // If exception is thrown by database
       Fluttertoast.showToast(msg: "Already Exists in your List");
     }
@@ -144,14 +144,16 @@ class DatabaseQuery {
 
     //Fetching records from database and convert into Fruit type objects
     List<Fruit> list =
-    res.isNotEmpty ? res.map((c) => Fruit.fromMap(c)).toList() : [];
+        res.isNotEmpty ? res.map((c) => Fruit.fromMap(c)).toList() : [];
     var weight;
     //Fetching MLKG for each Fruit
-    for(int i=0;i<list.length;i++){
-      weight = await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
-      list[i].mlkg = res.isNotEmpty ? res.map((weight) => MLKG.fromMap(weight)).toList() : [];
+    for (int i = 0; i < list.length; i++) {
+      weight =
+          await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
+      list[i].mlkg = res.isNotEmpty
+          ? res.map((weight) => MLKG.fromMap(weight)).toList()
+          : [];
     }
     return list;
   }
 }
-

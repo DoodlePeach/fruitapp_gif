@@ -1,22 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:fruitapp/models/calender_model.dart';
-import 'package:fruitapp/screens/calender.dart';
-=======
-import './Card/GridCard.dart';
-import './Card/GridDataModel.dart';
+import 'package:fruitapp/models/day_model.dart';
+import 'package:fruitapp/screens/day.dart';
 import './Dialog/NameFruitDialog.dart';
->>>>>>> 84eff8a9664ca97cf092bafecb3da3df3d03aea3
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
-<<<<<<< HEAD
-  runApp(MyApp());
-=======
-
   WidgetsFlutterBinding.ensureInitialized();
   // Get storage permission from user
   runApp(MyApp());
@@ -25,12 +15,10 @@ Future<void> main() async {
   if (status.isUndetermined) {
     // Need to get read/write permission for SQLite to work.
     Map<Permission, PermissionStatus> statuses =
-    await [Permission.storage].request();
+        await [Permission.storage].request();
     print(statuses[
-    Permission.storage]); // it should print PermissionStatus.granted
+        Permission.storage]); // it should print PermissionStatus.granted
   }
-
->>>>>>> 84eff8a9664ca97cf092bafecb3da3df3d03aea3
 }
 
 class MyApp extends StatelessWidget {
@@ -43,16 +31,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-<<<<<<< HEAD
       home: MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => CalenderModel())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => CalenderModel()),
+          ChangeNotifierProvider(create: (_) => DayModel())
+        ],
         builder: (context, widget) {
-          return CalenderWidget();
+          return DayPage();
         },
       ),
-    );
-=======
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -67,7 +54,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     // The Flutter framework has been optimized to make rerunning build methods
@@ -81,16 +67,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Column(
           children: [
-            RaisedButton(onPressed: () async {
-              final result = await showDialog(
-                context: context,
-                builder: (_) => NameFruitDialog("date"),
-              );
-            },
-                child:Text("Click")),
+            ElevatedButton(
+                onPressed: () async {
+                  final result = await showDialog(
+                    context: context,
+                    builder: (_) => NameFruitDialog("date"),
+                  );
+                },
+                child: Text("Click")),
           ],
         ));
->>>>>>> 84eff8a9664ca97cf092bafecb3da3df3d03aea3
   }
 }
 

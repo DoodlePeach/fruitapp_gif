@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fruitapp/models/calender_model.dart';
+import 'package:fruitapp/widgets/appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -10,17 +11,7 @@ class CalenderWidget extends StatelessWidget {
         Provider.of<CalenderModel>(context, listen: false).controller;
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              icon: Icon(Icons.calendar_today_outlined), onPressed: () {}),
-          IconButton(icon: Icon(Icons.more_vert), onPressed: () {})
-        ],
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {},
-        ),
-      ),
+      appBar: appBar,
       body: Container(
         child: TableCalendar(
           calendarController: calendarController,
