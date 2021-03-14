@@ -11,7 +11,7 @@ class CalenderWidget extends StatelessWidget {
         Provider.of<CalenderModel>(context, listen: false).controller;
 
     return Scaffold(
-      appBar: appBar,
+      appBar: StandardAppBar(),
       body: Container(
         child: TableCalendar(
           calendarController: calendarController,

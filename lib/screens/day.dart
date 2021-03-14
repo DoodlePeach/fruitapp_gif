@@ -7,7 +7,7 @@ class DayPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+      appBar: StandardAppBar(),
       body: Consumer<DayModel>(
         builder: (_, data, __) {
           return PageView.builder(
