@@ -10,7 +10,15 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Get storage permission from user
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => CalenderModel()),
+      ChangeNotifierProvider(create: (_) => DayModel())
+    ],
+    builder: (context, widget) {
+      return MyApp();
+    },
+  ));
 
   var status = await Permission.storage.status;
   if (status.isUndetermined) {
@@ -23,6 +31,10 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final ChangeNotifierProvider calenderModel =
+      ChangeNotifierProvider(create: (_) => CalenderModel());
+  final ChangeNotifierProvider dayModel =
+      ChangeNotifierProvider(create: (_) => DayModel());
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -32,15 +44,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => CalenderModel()),
-          ChangeNotifierProvider(create: (_) => DayModel())
-        ],
-        builder: (context, widget) {
-          return DayPage();
-        },
-      ),
+      initialRoute: '/day',
+      routes: {
+        '/day': (_) => DayPage(),
+        '/calender': (_) => CalenderWidget(),
+      },
     );
   }
 }

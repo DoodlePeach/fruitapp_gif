@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fruitapp/models/day_model.dart';
-import 'package:fruitapp/screens/calender.dart';
 import 'package:provider/provider.dart';
 
 class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -11,8 +10,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
             icon: Icon(Icons.calendar_today_outlined),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CalenderWidget()));
+              Navigator.pushNamed(context, '/calender');
             }),
         IconButton(icon: Icon(Icons.more_vert), onPressed: () {})
       ],

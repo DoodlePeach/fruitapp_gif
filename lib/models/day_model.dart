@@ -24,6 +24,15 @@ class DayModel extends ChangeNotifier {
     else if (newIndex - currentIndex < 0) previous();
   }
 
+  void setNewDate(DateTime newDate) {
+    final int difference = currentDate.difference(newDate).inDays;
+
+    currentIndex -= difference;
+    currentDate = newDate;
+
+    notifyListeners();
+  }
+
   void next() {
     currentDate = currentDate.add(new Duration(days: 1));
     currentIndex++;
