@@ -43,6 +43,84 @@ class DayPage extends StatelessWidget {
 enum PopupSelection { statistics, change, delete }
 
 class DayCardWidget extends StatelessWidget {
+  Widget addDialog(BuildContext context) {
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Number"),
+                IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      // TODO: Implement
+                    }),
+              ],
+            ),
+            Row(
+              children: [
+                Text("KG"),
+                Expanded(child: TextField()),
+                IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      // TODO: Implement
+                    }),
+                IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      // TODO: Implement
+                    })
+              ],
+            ),
+            Row(
+              children: [
+                Text("ML"),
+                Expanded(child: TextField()),
+                IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      // TODO: Implement
+                    }),
+                IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      // TODO: Implement
+                    })
+              ],
+            ),
+            Expanded(
+              child: TextField(
+                decoration: InputDecoration(hintText: "Comment"),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                    onPressed: () {
+                      // TODO: Implement
+                    },
+                    child: Text("CANCEL")),
+                SizedBox(
+                  width: 10,
+                ),
+                TextButton(
+                    onPressed: () {
+                      // TODO: Implement
+                    },
+                    child: Text("ADD"))
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -87,6 +165,11 @@ class DayCardWidget extends StatelessWidget {
                         icon: Icon(Icons.add),
                         onPressed: () {
                           // TODO: Implement
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return addDialog(context);
+                              });
                         })
                   ],
                 ),

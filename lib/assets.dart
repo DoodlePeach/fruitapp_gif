@@ -1,5 +1,5 @@
 final basePath = "assets/fruits/";
-final Map fruits = {
+final Map paths = {
   "watermelon": {
     "image": "watermelon/1.png",
     "variants": [
@@ -10,7 +10,7 @@ final Map fruits = {
       {"black": "5.png"},
       {"blue": "6.png"},
       {"orange": "7.png"},
-      {"yello": "8.png"}
+      {"yellow": "8.png"}
     ]
   },
   "apple": {
