@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/widgets/appbar.dart';
+import 'package:fruitapp/widgets/view_page_item.dart';
 import 'package:provider/provider.dart';
 
 class DayPage extends StatelessWidget {
@@ -18,7 +19,7 @@ class DayPage extends StatelessWidget {
                   child: ListView.builder(itemBuilder: (context, index) {
                     return Container(
                       padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
-                      child: DayCardWidget(),
+                      child: ViewPageItemWidget(),
                     );
                   }),
                 );
@@ -35,187 +36,6 @@ class DayPage extends StatelessWidget {
           // TODO: Implement FAB.
           print("EHUEUEUE");
         },
-      ),
-    );
-  }
-}
-
-enum PopupSelection { statistics, change, delete }
-
-class DayCardWidget extends StatelessWidget {
-  Widget addDialog(BuildContext context) {
-    return Dialog(
-      child: Container(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Number"),
-                IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      // TODO: Implement
-                    }),
-              ],
-            ),
-            Row(
-              children: [
-                Text("KG"),
-                Expanded(child: TextField()),
-                IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      // TODO: Implement
-                    }),
-                IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      // TODO: Implement
-                    })
-              ],
-            ),
-            Row(
-              children: [
-                Text("ML"),
-                Expanded(child: TextField()),
-                IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      // TODO: Implement
-                    }),
-                IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      // TODO: Implement
-                    })
-              ],
-            ),
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(hintText: "Comment"),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      // TODO: Implement
-                    },
-                    child: Text("CANCEL")),
-                SizedBox(
-                  width: 10,
-                ),
-                TextButton(
-                    onPressed: () {
-                      // TODO: Implement
-                    },
-                    child: Text("ADD"))
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        padding: EdgeInsets.all(5),
-        child: Row(
-          children: [
-            Expanded(
-              child: SizedBox(
-                width: 50,
-                height: 150,
-              ),
-              flex: 2,
-            ),
-            Expanded(
-              child: Container(
-                width: 100,
-                height: 150,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          "watermelon",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text("blue color",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18))
-                      ],
-                    ),
-                    TextField(
-                      decoration: const InputDecoration(hintText: "comments"),
-                    ),
-                    IconButton(
-                        alignment: Alignment.centerLeft,
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                          // TODO: Implement
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return addDialog(context);
-                              });
-                        })
-                  ],
-                ),
-              ),
-              flex: 4,
-            ),
-            Expanded(
-              child: Container(
-                width: 55,
-                height: 150,
-                alignment: Alignment.center,
-                child: PopupMenuButton(
-                  onSelected: (PopupSelection result) {
-                    // TODO: Implement
-                  },
-                  icon: Icon(Icons.more_vert),
-                  itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<PopupSelection>>[
-                    const PopupMenuItem(
-                      child: ListTile(
-                        leading: Icon(Icons.graphic_eq),
-                        title: Text("Statistics"),
-                      ),
-                      value: PopupSelection.statistics,
-                    ),
-                    const PopupMenuItem(
-                      child: ListTile(
-                        leading: Icon(Icons.refresh),
-                        title: Text("Change to another"),
-                      ),
-                      value: PopupSelection.change,
-                    ),
-                    const PopupMenuItem(
-                      child: ListTile(
-                        leading: Icon(Icons.clear),
-                        title: Text("Remove Fruit"),
-                      ),
-                      value: PopupSelection.delete,
-                    ),
-                  ],
-                ),
-              ),
-              flex: 1,
-            ),
-          ],
-        ),
       ),
     );
   }
