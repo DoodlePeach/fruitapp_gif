@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fruitapp/assets.dart';
 import '../Card/GridCard.dart';
 import '../Card/GridDataModel.dart';
 
@@ -16,11 +17,14 @@ class NameFruitDialog extends StatefulWidget {
 
 class _nameFruitDialog extends State<NameFruitDialog> {
   List<GridCard> list = [
-    GridCard(new GridCardModel("Apple", "", "assets/testimage.jpeg")),
-    GridCard(new GridCardModel("Banana", "", "assets/testimage.jpeg")),
-    GridCard(new GridCardModel("Water Melon", "", "assets/testimage.jpeg")),
-    GridCard(new GridCardModel("Avocado", "", "assets/testimage.jpeg")),
-    GridCard(new GridCardModel("Apricots", "", "assets/testimage.jpeg")),
+    GridCard(
+        new GridCardModel("Apple", "", basePath + paths["apple"]["image"])),
+    GridCard(
+        new GridCardModel("Banana", "", basePath + paths["banana"]["image"])),
+    GridCard(new GridCardModel(
+        "Water Melon", "", basePath + paths["pear"]["image"])),
+    GridCard(new GridCardModel(
+        "Water Melon", "", basePath + paths["watermelon"]["image"]))
   ];
 
   @override
