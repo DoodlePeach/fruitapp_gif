@@ -15,17 +15,46 @@ class DayModel extends ChangeNotifier {
   int currentIndex = (.161251195141521521142025 * 1e6).round();
 
   void refresh() {
-    DatabaseQuery.db
+    Future appleFuture = DatabaseQuery.db
         .getAllFruits("apple",
             "${currentDate.day}/${currentDate.month}/${currentDate.year}")
-        .then((List<Fruit> fetched) => apple = fetched)
-        .then((value) => notifyListeners());
+        .then((List<Fruit> fetched) {
+      apple = fetched;
+    });
+
+    Future bananaFuture = DatabaseQuery.db
+        .getAllFruits("banana",
+            "${currentDate.day}/${currentDate.month}/${currentDate.year}")
+        .then((List<Fruit> fetched) {
+      banana = fetched;
+    });
+
+    Future pearFuture = DatabaseQuery.db
+        .getAllFruits("watermelon",
+            "${currentDate.day}/${currentDate.month}/${currentDate.year}")
+        .then((List<Fruit> fetched) {
+      watermelon = fetched;
+    });
+
+    Future watermelonFuture = DatabaseQuery.db
+        .getAllFruits("pear",
+            "${currentDate.day}/${currentDate.month}/${currentDate.year}")
+        .then((List<Fruit> fetched) {
+      pear = fetched;
+    });
+
+    Future.wait([appleFuture, bananaFuture, pearFuture, watermelonFuture])
+        .then((value) {
+      notifyListeners();
+    });
   }
 
   void pageChanged(int newIndex) {
     if (newIndex - currentIndex > 0)
       next();
     else if (newIndex - currentIndex < 0) previous();
+
+    refresh();
   }
 
   void setNewDate(DateTime newDate) {

@@ -37,41 +37,57 @@ class _CardState extends State<GridCard> {
                 widget.gridCardModel.name,
                 "Black",
                 basePath +
+                    widget.gridCardModel.name +
+                    "/" +
                     paths[widget.gridCardModel.name]["variants"]["black"])),
             GridCard(new GridCardModel(
                 widget.gridCardModel.name,
                 "Green",
                 basePath +
+                    widget.gridCardModel.name +
+                    "/" +
                     paths[widget.gridCardModel.name]["variants"]["green"])),
             GridCard(new GridCardModel(
                 widget.gridCardModel.name,
                 "Blue",
                 basePath +
+                    widget.gridCardModel.name +
+                    "/" +
                     paths[widget.gridCardModel.name]["variants"]["blue"])),
             GridCard(new GridCardModel(
                 widget.gridCardModel.name,
                 "Red",
                 basePath +
+                    widget.gridCardModel.name +
+                    "/" +
                     paths[widget.gridCardModel.name]["variants"]["red"])),
             GridCard(new GridCardModel(
                 widget.gridCardModel.name,
                 "Yellow",
                 basePath +
+                    widget.gridCardModel.name +
+                    "/" +
                     paths[widget.gridCardModel.name]["variants"]["yellow"])),
             GridCard(new GridCardModel(
                 widget.gridCardModel.name,
                 "Orange",
                 basePath +
+                    widget.gridCardModel.name +
+                    "/" +
                     paths[widget.gridCardModel.name]["variants"]["orange"])),
             GridCard(new GridCardModel(
                 widget.gridCardModel.name,
                 "Grey",
                 basePath +
+                    widget.gridCardModel.name +
+                    "/" +
                     paths[widget.gridCardModel.name]["variants"]["grey"])),
             GridCard(new GridCardModel(
                 widget.gridCardModel.name,
                 "White",
                 basePath +
+                    widget.gridCardModel.name +
+                    "/" +
                     paths[widget.gridCardModel.name]["variants"]["white"])),
           ];
 

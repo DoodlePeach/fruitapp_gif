@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Fruit.dart';
 import 'mlkg_dialog.dart';
 
 // The selections a user can make when they click on the option button
@@ -6,8 +7,15 @@ import 'mlkg_dialog.dart';
 enum PopupSelection { statistics, change, delete }
 
 class ViewPageItemWidget extends StatelessWidget {
+  final Fruit fruit;
+  final TextEditingController commentController = new TextEditingController();
+
+  ViewPageItemWidget({@required this.fruit});
+
   @override
   Widget build(BuildContext context) {
+    commentController.text = fruit.comment == null ? "" : fruit.comment;
+
     return Card(
       child: Container(
         padding: EdgeInsets.all(5),
@@ -30,19 +38,20 @@ class ViewPageItemWidget extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "watermelon",
+                          fruit.name,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         SizedBox(
                           width: 10,
                         ),
-                        Text("blue color",
+                        Text(fruit.type,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18))
                       ],
                     ),
                     TextField(
+                      controller: commentController,
                       decoration: const InputDecoration(hintText: "comments"),
                     ),
                     IconButton(
