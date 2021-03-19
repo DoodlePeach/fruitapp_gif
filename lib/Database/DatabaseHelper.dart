@@ -138,9 +138,10 @@ class DatabaseQuery {
   // ************************** Get All Fruits ************************ //
 
 // Fetching Fruits from database
-  Future<List<Fruit>> getAllFruits(String name) async {
+  Future<List<Fruit>> getAllFruits(String name, String date) async {
     final db = await database;
-    var res = await db.rawQuery('SELECT * FROM Fruit WHERE name=?', [name]);
+    var res = await db
+        .rawQuery('SELECT * FROM Fruit WHERE name=? AND date=?', [name, date]);
 
     //Fetching records from database and convert into Fruit type objects
     List<Fruit> list =

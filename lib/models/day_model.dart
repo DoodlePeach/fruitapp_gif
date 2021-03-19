@@ -5,16 +5,20 @@ import '../Fruit.dart';
 
 class DayModel extends ChangeNotifier {
   DateTime currentDate = DateTime.now();
-  List<Fruit> fruits = [];
+
+  List<Fruit> apple = [];
+  List<Fruit> banana = [];
+  List<Fruit> watermelon = [];
+  List<Fruit> pear = [];
 
   final int startingIndex = (.161251195141521521142025 * 1e6).round();
   int currentIndex = (.161251195141521521142025 * 1e6).round();
 
   void refresh() {
     DatabaseQuery.db
-        .getAllFruits(
+        .getAllFruits("apple",
             "${currentDate.day}/${currentDate.month}/${currentDate.year}")
-        .then((List<Fruit> fetched) => fruits = fetched)
+        .then((List<Fruit> fetched) => apple = fetched)
         .then((value) => notifyListeners());
   }
 
