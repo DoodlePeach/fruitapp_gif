@@ -85,6 +85,9 @@ class DatabaseQuery {
 
   // Inserting new Fruit into the database
   Future<bool> newFruit(Fruit newFruit) async {
+
+    print('newFruit : '+newFruit.date);
+
     final db = await database;
     try {
       var checkFruitInDatabase = await db.rawQuery(
@@ -139,6 +142,7 @@ class DatabaseQuery {
 
 // Fetching Fruits from database
   Future<List<Fruit>> getAllFruits(String name, String date) async {
+    print("List:");
     final db = await database;
     var res = await db
         .rawQuery('SELECT * FROM Fruit WHERE name=? AND date=?', [name, date]);

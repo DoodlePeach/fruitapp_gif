@@ -2,7 +2,8 @@ import 'MLKG.dart';
 
 class Fruit {
 
-  String name, type, comment,date,id;
+  String name, type, comment,date;
+  int id;
   List<MLKG> mlkg;
 
   Fruit(this.name, this.type, this.comment, this.date,this.id);

@@ -15,6 +15,7 @@ class DayModel extends ChangeNotifier {
   int currentIndex = (.161251195141521521142025 * 1e6).round();
 
   void refresh() {
+
     Future appleFuture = DatabaseQuery.db
         .getAllFruits("apple",
             "${currentDate.day}/${currentDate.month}/${currentDate.year}")

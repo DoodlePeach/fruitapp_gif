@@ -96,8 +96,9 @@ class DayPage extends StatelessWidget {
           showDialog(
               context: context,
               builder: (context) {
-                return NameFruitDialog(
-                    Provider.of<DayModel>(context).currentDate.toString());
+                DateTime currentDate = Provider.of<DayModel>(context).currentDate;
+
+                return NameFruitDialog("${currentDate.day}/${currentDate.month}/${currentDate.year}");
               });
         },
       ),
