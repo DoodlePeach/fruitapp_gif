@@ -7,13 +7,16 @@ import './Dialog/NameFruitDialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
+import 'models/fruit_model.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Get storage permission from user
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => CalenderModel()),
-      ChangeNotifierProvider(create: (_) => DayModel())
+      ChangeNotifierProvider(create: (_) => DayModel()),
+      ChangeNotifierProvider(create: (_) => FruitModel())
     ],
     builder: (context, widget) {
       return MyApp();
@@ -31,10 +34,6 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final ChangeNotifierProvider calenderModel =
-      ChangeNotifierProvider(create: (_) => CalenderModel());
-  final ChangeNotifierProvider dayModel =
-      ChangeNotifierProvider(create: (_) => DayModel());
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

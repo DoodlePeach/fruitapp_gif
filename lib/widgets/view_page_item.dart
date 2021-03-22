@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fruitapp/assets.dart';
+import 'package:fruitapp/models/day_model.dart';
+import 'package:fruitapp/models/fruit_model.dart';
+import 'package:fruitapp/widgets/mlkg.dart';
+import 'package:provider/provider.dart';
 import '../Fruit.dart';
 import 'mlkg_dialog.dart';
 
@@ -25,13 +30,16 @@ class ViewPageItemWidget extends StatelessWidget {
               child: SizedBox(
                 width: 50,
                 height: 150,
+                // child: Image.asset(basePath +
+                //     fruit.name.toLowerCase() +
+                //     "/" +
+                //     paths[fruit.name.toLowerCase()][fruit.type.toLowerCase()]),
               ),
               flex: 2,
             ),
             Expanded(
               child: Container(
-                width: 100,
-                height: 150,
+                height: 170,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -54,15 +62,40 @@ class ViewPageItemWidget extends StatelessWidget {
                       controller: commentController,
                       decoration: const InputDecoration(hintText: "comments"),
                     ),
+                    Flexible(
+                      flex: 1,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: fruit.mlkg.length,
+                          itemBuilder: (context, index) {
+                            return MLKGWidget(
+                                kg: fruit.mlkg[index].kg != null
+                                    ? fruit.mlkg[index].kg
+                                    : "-",
+                                ml: fruit.mlkg[index].ml != null
+                                    ? fruit.mlkg[index].ml
+                                    : "-");
+                            // else
+                            //   return IconButton(
+                            //       alignment: Alignment.centerLeft,
+                            //       icon: Icon(Icons.add),
+                            //       onPressed: () {
+                            //         showDialog(
+                            //             context: context,
+                            //             builder: (context) {
+                            //               return AddMLKGDialog(fruit: fruit);
+                            //             });
+                            //       });
+                          }),
+                    ),
                     IconButton(
                         alignment: Alignment.centerLeft,
                         icon: Icon(Icons.add),
                         onPressed: () {
-                          // TODO: Implement
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return AddMLKGDialog();
+                                return AddMLKGDialog(fruit: fruit);
                               });
                         })
                   ],
@@ -77,7 +110,17 @@ class ViewPageItemWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 child: PopupMenuButton(
                   onSelected: (PopupSelection result) {
-                    // TODO: Implement
+                    if (result == PopupSelection.change) {
+                    } else if (result == PopupSelection.statistics) {
+                    } else {
+                      Provider.of<FruitModel>(context, listen: false)
+                          .deleteFruit(fruit)
+                          .then((value) {
+                        Provider.of<FruitModel>(context, listen: false).refresh(
+                            Provider.of<DayModel>(context, listen: false)
+                                .currentDate);
+                      });
+                    }
                   },
                   icon: Icon(Icons.more_vert),
                   itemBuilder: (BuildContext context) =>

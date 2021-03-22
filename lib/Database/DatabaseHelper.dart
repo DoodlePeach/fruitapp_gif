@@ -69,7 +69,7 @@ class DatabaseQuery {
   }
 
   //Delete MLKG from database using date.
-  deleteMLKG(MLKG mlkg) async {
+  Future deleteMLKG(MLKG mlkg) async {
     final db = await database;
     try {
       //Query for deleting MLKG from database
@@ -85,8 +85,7 @@ class DatabaseQuery {
 
   // Inserting new Fruit into the database
   Future<bool> newFruit(Fruit newFruit) async {
-
-    print('newFruit : '+newFruit.date);
+    print('newFruit : ' + newFruit.date);
 
     final db = await database;
     try {
@@ -120,7 +119,7 @@ class DatabaseQuery {
   }
 
   //Delete Fruit from database using date.
-  deleteFruit(Fruit item) async {
+  Future deleteFruit(Fruit item) async {
     final db = await database;
     try {
       //Query for deleting Fruit from database

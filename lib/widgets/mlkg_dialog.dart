@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fruitapp/MLKG.dart';
+import 'package:fruitapp/models/day_model.dart';
+import 'package:fruitapp/models/fruit_model.dart';
+import 'package:provider/provider.dart';
+
+import '../Fruit.dart';
 
 // The widget containing the dialog that add/edits mlkg items.
 // The dialog returns a Map object when the ADD button is clicked
 // with the keys "ml", "kg" and "comment" reflecting the changes
 // the user input.
 class AddMLKGDialog extends StatefulWidget {
+  final Fruit fruit;
+
+  AddMLKGDialog({@required this.fruit});
+
   @override
   _AddMLKGDialogState createState() => _AddMLKGDialogState();
 }
@@ -29,7 +39,8 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                 IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
-                      // TODO: Implement
+                      Provider.of<FruitModel>(context, listen: false)
+                          .deleteMLKG(new MLKG(id: widget.fruit.id));
                     }),
               ],
             ),
@@ -99,6 +110,18 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                       String inputML = ml.text;
                       String inputKG = kg.text;
                       String inputComment = comment.text;
+
+                      Provider.of<FruitModel>(context, listen: false)
+                          .addMLKG(new MLKG(
+                              fid: widget.fruit.id,
+                              ml: inputML,
+                              kg: inputKG,
+                              comment: inputComment))
+                          .then((value) => Provider.of<FruitModel>(context,
+                                  listen: false)
+                              .refresh(
+                                  Provider.of<DayModel>(context, listen: false)
+                                      .currentDate));
 
                       Navigator.of(context).pop({
                         "ml": inputML,
