@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/Dialog/NameFruitDialog.dart';
+import 'package:fruitapp/models/day_model.dart';
+import 'package:fruitapp/models/fruit_model.dart';
+import 'package:provider/provider.dart';
 import '../Dialog/SubCategoryFruitDialog.dart';
 import '../Card/GridDataModel.dart';
 import '../assets.dart';
@@ -128,6 +131,8 @@ class _CardState extends State<GridCard> {
             builder: (_) => SubNameFruitDialog(list:list),
           ).then((value) => {
             NameFruitDialog.updated = false,
+            Provider.of<FruitModel>(context, listen: false).refresh(
+                Provider.of<DayModel>(context, listen: false).currentDate)
           });
         }
       },
