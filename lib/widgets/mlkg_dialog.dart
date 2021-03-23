@@ -53,7 +53,7 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                       icon: Icon(Icons.delete),
                       onPressed: () {
                         Provider.of<FruitModel>(context, listen: false)
-                            .deleteMLKG(new MLKG(id: widget.fruit.id))
+                            .deleteMLKG(widget.mlkg)
                             .then((value) =>
                                 Provider.of<FruitModel>(context, listen: false)
                                     .refresh(Provider.of<DayModel>(context,

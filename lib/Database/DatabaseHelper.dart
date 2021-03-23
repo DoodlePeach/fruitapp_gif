@@ -56,6 +56,7 @@ class DatabaseQuery {
 
   //Updating MLKG in the database using date
   updateMLKG(MLKG mlkg, bool toastOption) async {
+    print("MLKGssss:"+mlkg.id.toString());
     final db = await database;
     try {
       //Query for updating MLKG
@@ -70,6 +71,7 @@ class DatabaseQuery {
 
   //Delete MLKG from database using date.
   Future deleteMLKG(MLKG mlkg) async {
+    print("mlkg delete"+mlkg.id.toString());
     final db = await database;
     try {
       //Query for deleting MLKG from database
