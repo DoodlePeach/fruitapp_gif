@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:fruitapp/assets.dart';
 import '../Card/GridCard.dart';
 import '../Card/GridDataModel.dart';
+import '../Fruit.dart';
 
 class NameFruitDialog extends StatefulWidget {
   static String date;
+  static bool updated = false;
+  static Fruit previousFruit;
 
   NameFruitDialog(String date) {
     NameFruitDialog.date = date;
+  }
+
+  NameFruitDialog.forUpdate(Fruit fruit){
+    updated = true;
+    previousFruit = fruit;
   }
 
   @override

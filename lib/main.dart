@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/screens/calender.dart';
@@ -52,49 +53,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+/*
 
-  final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-        ),
-        body: Column(
-          children: [
-            ElevatedButton(
-                onPressed: () async {
-                  final result = await showDialog(
-                    context: context,
-                    builder: (_) => NameFruitDialog("date"),
-                  );
-                },
-                child: Text("Click")),
-          ],
-        ));
-  }
-}
-
-// Future getPermission() async {
-//     // Get storage permission from user
-//     var status = await Permission.storage.status;
-//     if (status.isUndetermined) {
-//       // Need to get read/write permission for SQLite to work.
-//       Map<Permission, PermissionStatus> statuses =
-//           await [Permission.storage].request();
-//       print(statuses[
-//           Permission.storage]); // it should print PermissionStatus.granted
-//     }
+*/

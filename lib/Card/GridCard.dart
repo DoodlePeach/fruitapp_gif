@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fruitapp/Database/DatabaseHelper.dart';
+import 'package:fruitapp/Dialog/NameFruitDialog.dart';
 import '../Dialog/SubCategoryFruitDialog.dart';
 import '../Card/GridDataModel.dart';
 import '../assets.dart';
@@ -19,18 +21,49 @@ class _CardState extends State<GridCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (widget.gridCardModel.type != "") {
-          if (isAdded) {
-            SubNameFruitDialog.selectedList.remove(widget.gridCardModel);
-            setState(() {
-              isAdded = false;
-            });
-          } else {
-            SubNameFruitDialog.selectedList.add(widget.gridCardModel);
-            setState(() {
-              isAdded = true;
-            });
-          }
+
+          if (widget.gridCardModel.type != "") {
+
+            if(!NameFruitDialog.updated){
+                if (isAdded) {
+                  SubNameFruitDialog.selectedList.remove(widget.gridCardModel);
+                  setState(() {
+                    isAdded = false;
+                  });
+                } else {
+                  SubNameFruitDialog.selectedList.add(widget.gridCardModel);
+                  setState(() {
+                    isAdded = true;
+                  });
+                }
+
+            }
+            else {
+                 SubNameFruitDialog.newFruitSelectedForUpdate = widget.gridCardModel;
+                 showDialog(
+                   context: context,
+                   builder: (_) => Dialog(child: Column(
+                     children: [
+                       Text("Are sure you want to update it? "),
+                       RaisedButton(
+                         onPressed: () async {
+                             NameFruitDialog.previousFruit.name =
+                                 SubNameFruitDialog.newFruitSelectedForUpdate.name;
+                             NameFruitDialog.previousFruit.type =
+                                 SubNameFruitDialog.newFruitSelectedForUpdate.type;
+                             var result = await DatabaseQuery.db.updateFruit(
+                                 NameFruitDialog.previousFruit, false);
+                             Navigator.of(context).pop();
+                        },
+                            child: Text("Yes")),
+                       RaisedButton(onPressed: (){
+                         Navigator.of(context).pop();
+                       },
+                        child: Text("No"),)
+                     ],
+                   ),)
+                 );
+            }
         } else {
           List<GridCard> list = [
             GridCard(new GridCardModel(
@@ -90,11 +123,12 @@ class _CardState extends State<GridCard> {
                     "/" +
                     paths[widget.gridCardModel.name]["variants"]["white"])),
           ];
-
-          final result = await showDialog(
+          await showDialog(
             context: context,
-            builder: (_) => SubNameFruitDialog(list),
-          );
+            builder: (_) => SubNameFruitDialog(list:list),
+          ).then((value) => {
+            NameFruitDialog.updated = false,
+          });
         }
       },
       child: SizedBox(

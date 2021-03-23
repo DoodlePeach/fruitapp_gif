@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fruitapp/Dialog/NameFruitDialog.dart';
+import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/assets.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
@@ -120,8 +122,19 @@ class ViewPageItemWidget extends StatelessWidget {
                 height: 150,
                 alignment: Alignment.center,
                 child: PopupMenuButton(
-                  onSelected: (PopupSelection result) {
+                  onSelected: (PopupSelection result) async {
                     if (result == PopupSelection.change) {
+
+                      showDialog(
+                          context: context,
+                          builder: (_) => NameFruitDialog.forUpdate(fruit)
+                      ).then((value) => (){
+
+                        SubNameFruitDialog.newFruitSelectedForUpdate=null;
+                        NameFruitDialog.updated= false;
+
+                      });
+
                     } else if (result == PopupSelection.statistics) {
                     } else {
                       Provider.of<FruitModel>(context, listen: false)

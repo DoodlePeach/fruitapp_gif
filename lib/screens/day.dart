@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fruitapp/Dialog/NameFruitDialog.dart';
+import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/widgets/appbar.dart';
@@ -101,10 +102,10 @@ class DayPage extends StatelessWidget {
               builder: (context) {
                 DateTime currentDate =
                     Provider.of<DayModel>(context).currentDate;
-
                 return NameFruitDialog(
                     "${currentDate.day}/${currentDate.month}/${currentDate.year}");
-              });
+              }).then((value) => {
+              SubNameFruitDialog.selectedList.clear(),});
         },
       ),
     );
