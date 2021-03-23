@@ -66,7 +66,7 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> {
                   "Cancel",
                   style: TextStyle(fontSize: 15),
                 )),
-            Container(
+            NameFruitDialog.updated ?Container(): Container(
               margin: const EdgeInsets.only(left: 10.0, right: 10.0),
               child: RaisedButton(
                   color: Colors.lightGreen,
