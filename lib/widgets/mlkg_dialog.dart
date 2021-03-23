@@ -153,7 +153,7 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                         widget.mlkg.comment = comment.text;
 
                         Provider.of<FruitModel>(context, listen: false)
-                            .updateMLKG(widget.fruit)
+                            .updateMLKG(widget.mlkg)
                             .then((value) =>
                                 Provider.of<FruitModel>(context, listen: false)
                                     .refresh(Provider.of<DayModel>(context,

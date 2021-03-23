@@ -56,9 +56,9 @@ class FruitModel extends ChangeNotifier {
     return DatabaseQuery.db.newMLKG(mlkg).then((_) => notifyListeners());
   }
 
-  Future updateMLKG(Fruit fruit) {
+  Future updateMLKG(MLKG mlkg) {
     return DatabaseQuery.db
-        .updateFruit(fruit, false)
+        .updateMLKG(mlkg, false)
         .then((_) => notifyListeners());
   }
 

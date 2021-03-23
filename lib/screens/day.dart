@@ -4,7 +4,6 @@ import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/widgets/appbar.dart';
-import 'package:fruitapp/widgets/mlkg.dart';
 import 'package:fruitapp/widgets/view_page_item.dart';
 import 'package:provider/provider.dart';
 
@@ -105,7 +104,10 @@ class DayPage extends StatelessWidget {
                 return NameFruitDialog(
                     "${currentDate.day}/${currentDate.month}/${currentDate.year}");
               }).then((value) => {
-              SubNameFruitDialog.selectedList.clear(),});
+                SubNameFruitDialog.selectedList.clear(),
+                Provider.of<FruitModel>(context, listen: false).refresh(
+                    Provider.of<DayModel>(context, listen: false).currentDate)
+              });
         },
       ),
     );

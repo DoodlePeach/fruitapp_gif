@@ -32,10 +32,14 @@ class ViewPageItemWidget extends StatelessWidget {
               child: SizedBox(
                 width: 50,
                 height: 150,
-                // child: Image.asset(basePath +
-                //     fruit.name.toLowerCase() +
-                //     "/" +
-                //     paths[fruit.name.toLowerCase()][fruit.type.toLowerCase()]),
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Image.asset(basePath +
+                      fruit.name.toLowerCase() +
+                      "/" +
+                      paths[fruit.name.toLowerCase()]["variants"]
+                          [fruit.type.toLowerCase()]),
+                ),
               ),
               flex: 2,
             ),
@@ -124,17 +128,14 @@ class ViewPageItemWidget extends StatelessWidget {
                 child: PopupMenuButton(
                   onSelected: (PopupSelection result) async {
                     if (result == PopupSelection.change) {
-
                       showDialog(
-                          context: context,
-                          builder: (_) => NameFruitDialog.forUpdate(fruit)
-                      ).then((value) => (){
-
-                        SubNameFruitDialog.newFruitSelectedForUpdate=null;
-                        NameFruitDialog.updated= false;
-
-                      });
-
+                              context: context,
+                              builder: (_) => NameFruitDialog.forUpdate(fruit))
+                          .then((value) => () {
+                                SubNameFruitDialog.newFruitSelectedForUpdate =
+                                    null;
+                                NameFruitDialog.updated = false;
+                              });
                     } else if (result == PopupSelection.statistics) {
                     } else {
                       Provider.of<FruitModel>(context, listen: false)
