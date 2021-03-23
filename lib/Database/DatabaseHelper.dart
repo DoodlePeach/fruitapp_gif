@@ -141,22 +141,27 @@ class DatabaseQuery {
 
 // Fetching Fruits from database
   Future<List<Fruit>> getAllFruits(String name, String date) async {
-    print("List:");
+
     final db = await database;
     var res = await db
         .rawQuery('SELECT * FROM Fruit WHERE name=? AND date=?', [name, date]);
 
     //Fetching records from database and convert into Fruit type objects
-    List<Fruit> list =
-        res.isNotEmpty ? res.map((c) => Fruit.fromMap(c)).toList() : [];
+    List<Fruit> list = res.isNotEmpty ? res.map((c) => Fruit.fromMap(c)).toList() : [];
+
     var weight;
     //Fetching MLKG for each Fruit
     for (int i = 0; i < list.length; i++) {
-      weight =
-          await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
-      list[i].mlkg = res.isNotEmpty
-          ? res.map((weight) => MLKG.fromMap(weight)).toList()
-          : [];
+      print("Fid:"+list[i].id.toString());
+
+      weight =  await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
+      // print("List return:"+weight.length.toString());
+      for (var item in weight){
+        list[i].mlkg.add(new MLKG.fromMap(item));
+      }
+
+      print("Fid:"+list[i].id.toString() + "  Mlkg : "+ list[i].mlkg.length.toString());
+
     }
     return list;
   }

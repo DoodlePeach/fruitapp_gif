@@ -4,7 +4,7 @@ class Fruit {
 
   String name, type, comment,date;
   int id;
-  List<MLKG> mlkg;
+  List<MLKG> mlkg = new List<MLKG>();
 
   Fruit(this.name, this.type, this.comment, this.date,this.id);
 
