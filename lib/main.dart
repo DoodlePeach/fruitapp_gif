@@ -4,6 +4,7 @@ import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/screens/calender.dart';
 import 'package:fruitapp/screens/day.dart';
+import 'package:fruitapp/screens/detail.dart';
 import './Dialog/NameFruitDialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/day': (_) => DayPage(),
         '/calender': (_) => CalenderWidget(),
+        '/detail': (_) => DetailPage()
       },
     );
   }

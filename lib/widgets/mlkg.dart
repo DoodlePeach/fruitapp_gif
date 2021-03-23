@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MLKGWidget extends StatelessWidget {
-  final ml, kg;
+  final ml, kg, no;
 
-  MLKGWidget({@required this.kg, @required this.ml});
+  MLKGWidget({@required this.kg, @required this.ml, @required this.no});
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +12,25 @@ class MLKGWidget extends StatelessWidget {
       width: 50,
       alignment: Alignment.center,
       decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.symmetric(horizontal: 2),
       margin: EdgeInsets.all(5),
       child: Center(
         child: FittedBox(
           fit: BoxFit.fitHeight,
           child: Column(
             children: [
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Row(
+                  children: [
+                    Text("No."),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(no.toString())
+                  ],
+                ),
+              ),
               FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Row(

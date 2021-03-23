@@ -11,7 +11,7 @@ import 'mlkg_dialog.dart';
 
 // The selections a user can make when they click on the option button
 // present at the right side of ViewPageItemWidget.
-enum PopupSelection { statistics, change, delete }
+enum PopupSelection { information, change, delete }
 
 class ViewPageItemWidget extends StatelessWidget {
   final Fruit fruit;
@@ -45,7 +45,7 @@ class ViewPageItemWidget extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                height: 170,
+                height: 200,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -85,12 +85,14 @@ class ViewPageItemWidget extends StatelessWidget {
                                     });
                               },
                               child: MLKGWidget(
-                                  kg: fruit.mlkg[index].kg != null
-                                      ? fruit.mlkg[index].kg
-                                      : "-",
-                                  ml: fruit.mlkg[index].ml != null
-                                      ? fruit.mlkg[index].ml
-                                      : "-"),
+                                kg: fruit.mlkg[index].kg != null
+                                    ? fruit.mlkg[index].kg
+                                    : "-",
+                                ml: fruit.mlkg[index].ml != null
+                                    ? fruit.mlkg[index].ml
+                                    : "-",
+                                no: index,
+                              ),
                             );
                             // else
                             //   return IconButton(
@@ -136,7 +138,9 @@ class ViewPageItemWidget extends StatelessWidget {
                                     null;
                                 NameFruitDialog.updated = false;
                               });
-                    } else if (result == PopupSelection.statistics) {
+                    } else if (result == PopupSelection.information) {
+                      Navigator.of(context)
+                          .pushNamed('/detail', arguments: fruit);
                     } else {
                       Provider.of<FruitModel>(context, listen: false)
                           .deleteFruit(fruit)
@@ -152,10 +156,10 @@ class ViewPageItemWidget extends StatelessWidget {
                       <PopupMenuEntry<PopupSelection>>[
                     const PopupMenuItem(
                       child: ListTile(
-                        leading: Icon(Icons.graphic_eq),
-                        title: Text("Statistics"),
+                        leading: Icon(Icons.info_outline),
+                        title: Text("Information"),
                       ),
-                      value: PopupSelection.statistics,
+                      value: PopupSelection.information,
                     ),
                     const PopupMenuItem(
                       child: ListTile(

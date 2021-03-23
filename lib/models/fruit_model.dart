@@ -66,9 +66,24 @@ class FruitModel extends ChangeNotifier {
     return DatabaseQuery.db.deleteMLKG(mlkg).then((value) => notifyListeners());
   }
 
+  Future updateFruit(Fruit fruit) {
+    return DatabaseQuery.db
+        .updateFruit(fruit, false)
+        .then((_) => notifyListeners());
+  }
+
   Future deleteFruit(Fruit fruit) {
     return DatabaseQuery.db
         .deleteFruit(fruit)
         .then((value) => notifyListeners());
+  }
+
+  Fruit getReference(Fruit copy) {
+    return apple.firstWhere((element) => (element.id == copy.id),
+        orElse: () => watermelon.firstWhere(
+            (element) => (element.id == copy.id),
+            orElse: () => pear.firstWhere((element) => (element.id == copy.id),
+                orElse: () =>
+                    banana.firstWhere((element) => (element.id == copy.id)))));
   }
 }
