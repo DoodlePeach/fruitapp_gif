@@ -17,60 +17,68 @@ class DayPage extends StatelessWidget {
           return PageView.builder(
               itemBuilder: (context, index) {
                 return Container(
-                  padding: EdgeInsets.only(top: 10),
-                  color: index % 2 == 0 ? Colors.pink : Colors.cyan,
-                  child: Consumer<FruitModel>(
-                    builder: (context, fruitData, child) {
-                      if (data.currentIndex != index)
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 10),
+                      // color: index % 2 == 0 ? Colors.pink : Colors.cyan,
+                      child: Consumer<FruitModel>(
+                        builder: (context, fruitData, child) {
+                          if (data.currentIndex != index)
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
 
-                      return Column(
-                        children: [
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: fruitData.apple.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
-                                  child: ViewPageItemWidget(
-                                      fruit: fruitData.apple[index]),
-                                );
-                              }),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: fruitData.pear.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
-                                  child: ViewPageItemWidget(
-                                      fruit: fruitData.pear[index]),
-                                );
-                              }),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: fruitData.watermelon.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
-                                  child: ViewPageItemWidget(
-                                      fruit: fruitData.watermelon[index]),
-                                );
-                              }),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: fruitData.banana.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
-                                  child: ViewPageItemWidget(
-                                      fruit: fruitData.banana[index]),
-                                );
-                              })
-                        ],
-                      );
-                    },
+                          return Column(
+                            children: [
+                              ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: fruitData.apple.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
+                                      child: ViewPageItemWidget(
+                                          fruit: fruitData.apple[index]),
+                                    );
+                                  }),
+                              ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: fruitData.pear.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
+                                      child: ViewPageItemWidget(
+                                          fruit: fruitData.pear[index]),
+                                    );
+                                  }),
+                              ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: fruitData.watermelon.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
+                                      child: ViewPageItemWidget(
+                                          fruit: fruitData.watermelon[index]),
+                                    );
+                                  }),
+                              ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: fruitData.banana.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      padding: EdgeInsets.fromLTRB(8, 0, 8, 4),
+                                      child: ViewPageItemWidget(
+                                          fruit: fruitData.banana[index]),
+                                    );
+                                  })
+                            ],
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 );
               },

@@ -68,13 +68,24 @@ class ViewPageItemWidget extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: fruit.mlkg.length,
                           itemBuilder: (context, index) {
-                            return MLKGWidget(
-                                kg: fruit.mlkg[index].kg != null
-                                    ? fruit.mlkg[index].kg
-                                    : "-",
-                                ml: fruit.mlkg[index].ml != null
-                                    ? fruit.mlkg[index].ml
-                                    : "-");
+                            return GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AddMLKGDialog(
+                                          fruit: fruit,
+                                          mlkg: fruit.mlkg[index]);
+                                    });
+                              },
+                              child: MLKGWidget(
+                                  kg: fruit.mlkg[index].kg != null
+                                      ? fruit.mlkg[index].kg
+                                      : "-",
+                                  ml: fruit.mlkg[index].ml != null
+                                      ? fruit.mlkg[index].ml
+                                      : "-"),
+                            );
                             // else
                             //   return IconButton(
                             //       alignment: Alignment.centerLeft,

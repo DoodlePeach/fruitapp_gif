@@ -56,6 +56,12 @@ class FruitModel extends ChangeNotifier {
     return DatabaseQuery.db.newMLKG(mlkg).then((_) => notifyListeners());
   }
 
+  Future updateMLKG(Fruit fruit) {
+    return DatabaseQuery.db
+        .updateFruit(fruit, false)
+        .then((_) => notifyListeners());
+  }
+
   Future deleteMLKG(MLKG mlkg) {
     return DatabaseQuery.db.deleteMLKG(mlkg).then((value) => notifyListeners());
   }

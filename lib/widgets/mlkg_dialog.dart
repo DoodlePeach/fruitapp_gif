@@ -13,8 +13,9 @@ import '../Fruit.dart';
 // the user input.
 class AddMLKGDialog extends StatefulWidget {
   final Fruit fruit;
+  final MLKG mlkg;
 
-  AddMLKGDialog({@required this.fruit});
+  AddMLKGDialog({@required this.fruit, this.mlkg});
 
   @override
   _AddMLKGDialogState createState() => _AddMLKGDialogState();
@@ -24,6 +25,17 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
   TextEditingController ml = new TextEditingController(),
       kg = TextEditingController(),
       comment = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.mlkg != null) {
+      kg.text = widget.mlkg.kg;
+      ml.text = widget.mlkg.ml;
+      comment.text = widget.mlkg.comment;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +48,19 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Number"),
-                IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      Provider.of<FruitModel>(context, listen: false)
-                          .deleteMLKG(new MLKG(id: widget.fruit.id));
-                    }),
+                if (widget.mlkg != null)
+                  IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        Provider.of<FruitModel>(context, listen: false)
+                            .deleteMLKG(new MLKG(id: widget.fruit.id))
+                            .then((value) =>
+                                Provider.of<FruitModel>(context, listen: false)
+                                    .refresh(Provider.of<DayModel>(context,
+                                            listen: false)
+                                        .currentDate))
+                            .then((value) => Navigator.of(context).pop());
+                      }),
               ],
             ),
             Row(
@@ -99,37 +118,50 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
               children: [
                 TextButton(
                     onPressed: () {
-                      // TODO: Implement
+                      Navigator.of(context).pop();
                     },
                     child: Text("CANCEL")),
                 SizedBox(
                   width: 10,
                 ),
-                TextButton(
-                    onPressed: () {
-                      String inputML = ml.text;
-                      String inputKG = kg.text;
-                      String inputComment = comment.text;
+                if (widget.mlkg == null)
+                  TextButton(
+                      onPressed: () {
+                        String inputML = ml.text;
+                        String inputKG = kg.text;
+                        String inputComment = comment.text;
 
-                      Provider.of<FruitModel>(context, listen: false)
-                          .addMLKG(new MLKG(
-                              fid: widget.fruit.id,
-                              ml: inputML,
-                              kg: inputKG,
-                              comment: inputComment))
-                          .then((value) => Provider.of<FruitModel>(context,
-                                  listen: false)
-                              .refresh(
-                                  Provider.of<DayModel>(context, listen: false)
-                                      .currentDate));
+                        Provider.of<FruitModel>(context, listen: false)
+                            .addMLKG(new MLKG(
+                                fid: widget.fruit.id,
+                                ml: inputML,
+                                kg: inputKG,
+                                comment: inputComment))
+                            .then((value) =>
+                                Provider.of<FruitModel>(context, listen: false)
+                                    .refresh(Provider.of<DayModel>(context,
+                                            listen: false)
+                                        .currentDate))
+                            .then((value) => Navigator.of(context).pop());
+                      },
+                      child: Text("ADD"))
+                else
+                  TextButton(
+                      onPressed: () {
+                        widget.mlkg.ml = ml.text;
+                        widget.mlkg.kg = kg.text;
+                        widget.mlkg.comment = comment.text;
 
-                      Navigator.of(context).pop({
-                        "ml": inputML,
-                        "kg": inputKG,
-                        "comment": inputComment
-                      });
-                    },
-                    child: Text("ADD"))
+                        Provider.of<FruitModel>(context, listen: false)
+                            .updateMLKG(widget.fruit)
+                            .then((value) =>
+                                Provider.of<FruitModel>(context, listen: false)
+                                    .refresh(Provider.of<DayModel>(context,
+                                            listen: false)
+                                        .currentDate))
+                            .then((value) => Navigator.of(context).pop());
+                      },
+                      child: Text("UPDATE"))
               ],
             )
           ],
