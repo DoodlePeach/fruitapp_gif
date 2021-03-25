@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,17 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
             icon: Icon(Icons.calendar_today_outlined),
             onPressed: () {
-              Navigator.pushNamed(context, '/calender');
+              CalenderModel calenderModel =
+                  Provider.of<CalenderModel>(context, listen: false);
+
+              if (ModalRoute.of(context).settings.name == "/calender" &&
+                  calenderModel.isCalenderOpen) {
+                Navigator.pop(context);
+                calenderModel.isCalenderOpen = false;
+              } else {
+                Navigator.pushNamed(context, '/calender');
+                calenderModel.isCalenderOpen = true;
+              }
             }),
         IconButton(icon: Icon(Icons.more_vert), onPressed: () {})
       ],

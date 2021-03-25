@@ -14,6 +14,9 @@ class DayPage extends StatelessWidget {
       appBar: StandardAppBar(),
       body: Consumer<DayModel>(
         builder: (_, data, __) {
+          Provider.of<FruitModel>(context, listen: false)
+              .refresh(data.currentDate);
+
           return PageView.builder(
               itemBuilder: (context, index) {
                 return Container(

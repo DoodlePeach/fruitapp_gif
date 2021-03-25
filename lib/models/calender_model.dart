@@ -3,6 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 class CalenderModel extends ChangeNotifier {
   CalendarController _controller = new CalendarController();
+  bool isCalenderOpen = false;
 
   CalendarController get controller => _controller;
 

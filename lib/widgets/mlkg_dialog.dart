@@ -8,9 +8,6 @@ import 'package:provider/provider.dart';
 import '../Fruit.dart';
 
 // The widget containing the dialog that add/edits mlkg items.
-// The dialog returns a Map object when the ADD button is clicked
-// with the keys "ml", "kg" and "comment" reflecting the changes
-// the user input.
 class AddMLKGDialog extends StatefulWidget {
   final Fruit fruit;
   final MLKG mlkg;
@@ -35,6 +32,31 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
       ml.text = widget.mlkg.ml;
       comment.text = widget.mlkg.comment;
     }
+  }
+
+  void add(TextEditingController controller) {
+    int num = 0;
+    try {
+      num = int.parse(controller.text);
+      num++;
+    } catch (e) {
+      num = 0;
+    }
+
+    controller.text = num.toString();
+  }
+
+  void subtract(TextEditingController controller) {
+    int num = 0;
+    try {
+      num = int.parse(controller.text);
+
+      if (num > 0) num--;
+    } catch (e) {
+      num = 0;
+    }
+
+    controller.text = num.toString();
   }
 
   @override
@@ -73,16 +95,9 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                         inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
                     ])),
+                IconButton(icon: Icon(Icons.add), onPressed: () => add(kg)),
                 IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      // TODO: Implement
-                    }),
-                IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: () {
-                      // TODO: Implement
-                    })
+                    icon: Icon(Icons.remove), onPressed: () => subtract(kg))
               ],
             ),
             Row(
@@ -95,16 +110,9 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                         inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
                     ])),
+                IconButton(icon: Icon(Icons.add), onPressed: () => add(ml)),
                 IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      // TODO: Implement
-                    }),
-                IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: () {
-                      // TODO: Implement
-                    })
+                    icon: Icon(Icons.remove), onPressed: () => subtract(ml))
               ],
             ),
             Expanded(
