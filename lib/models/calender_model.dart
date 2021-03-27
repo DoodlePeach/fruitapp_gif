@@ -1,13 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class CalenderModel extends ChangeNotifier {
-  CalendarController _controller = new CalendarController();
+  // This variable reflects if the calender is open.
+  // It is helpful for "toggling" the calender across diffrent widgets.
   bool isCalenderOpen = false;
-
-  CalendarController get controller => _controller;
-
-  void onDateSelected(DateTime time, List<dynamic> a, List<dynamic> b) {
-    print(time);
-  }
 }

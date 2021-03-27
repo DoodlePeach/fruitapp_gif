@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// This widget shows some of the MLKG data associated with a fruit,
 class MLKGWidget extends StatelessWidget {
   final ml, kg, no;
 

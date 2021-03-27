@@ -23,7 +23,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   TextEditingController _controller = new TextEditingController();
   bool firstBuild = true;
-
+  
   @override
   Widget build(BuildContext context) {
     Fruit fruit = ModalRoute.of(context).settings.arguments;
@@ -187,7 +187,7 @@ class _DetailPageState extends State<DetailPage> {
                               showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return AddMLKGDialog(
+                                    return AddUpdateMLKGDialog(
                                         fruit: fruit, mlkg: fruit.mlkg[index]);
                                   }).then((value) => setState(() {}));
                             },
@@ -212,7 +212,7 @@ class _DetailPageState extends State<DetailPage> {
                         showDialog(
                             context: context,
                             builder: (context) {
-                              return AddMLKGDialog(fruit: fruit);
+                              return AddUpdateMLKGDialog(fruit: fruit);
                             });
                       }),
                   Container(

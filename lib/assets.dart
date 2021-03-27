@@ -1,4 +1,11 @@
+// This file contains the paths of the assets that are used throughout the app.
+// Since thse are static and are not that many, we can just store them like this.
+
+// Base path where the fruits are stored.
 final basePath = "assets/fruits/";
+
+// The paths of fruits, where their default images are in [image], and the
+// the paths of different colors are in [variants] key.
 final Map paths = {
   "watermelon": {
     "image": "watermelon/1.png",

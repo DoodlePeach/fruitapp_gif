@@ -4,12 +4,16 @@ import 'package:fruitapp/Database/DatabaseHelper.dart';
 import '../Fruit.dart';
 import '../MLKG.dart';
 
+// This model holds data of the fruits of the current day
+// and the operations associated with them.
 class FruitModel extends ChangeNotifier {
+  // Each fruit has a different list.
   List<Fruit> apple = [];
   List<Fruit> banana = [];
   List<Fruit> watermelon = [];
   List<Fruit> pear = [];
 
+  // Load the fruits of a date.
   void refresh(DateTime currentDate) {
     Future appleFuture = DatabaseQuery.db
         .getAllFruits("apple",
@@ -39,6 +43,7 @@ class FruitModel extends ChangeNotifier {
       pear = fetched;
     });
 
+    // Wait for all of the fruits to be fetched and then notify the listeners.
     Future.wait([appleFuture, bananaFuture, pearFuture, watermelonFuture])
         .then((value) {
       notifyListeners();
@@ -52,6 +57,7 @@ class FruitModel extends ChangeNotifier {
     pear.clear();
   }
 
+  // Read-Update-Delete operations for Fruits
   Future addMLKG(MLKG mlkg) {
     return DatabaseQuery.db.newMLKG(mlkg).then((_) => notifyListeners());
   }
@@ -78,6 +84,8 @@ class FruitModel extends ChangeNotifier {
         .then((value) => notifyListeners());
   }
 
+  // Get the orignal reference to a fruit. Useful for binding it to widgets
+  // when you are updating values.
   Fruit getReference(Fruit copy) {
     return apple.firstWhere((element) => (element.id == copy.id),
         orElse: () => watermelon.firstWhere(

@@ -8,17 +8,21 @@ import 'package:provider/provider.dart';
 import '../Fruit.dart';
 
 // The widget containing the dialog that add/edits mlkg items.
-class AddMLKGDialog extends StatefulWidget {
+class AddUpdateMLKGDialog extends StatefulWidget {
+  // The fruit that is this dialog was called on,
   final Fruit fruit;
+
+  // OPTIONAL: This represents the MLKG item that is set to be updated.
   final MLKG mlkg;
 
-  AddMLKGDialog({@required this.fruit, this.mlkg});
+  AddUpdateMLKGDialog({@required this.fruit, this.mlkg});
 
   @override
-  _AddMLKGDialogState createState() => _AddMLKGDialogState();
+  _AddUpdateMLKGDialogState createState() => _AddUpdateMLKGDialogState();
 }
 
-class _AddMLKGDialogState extends State<AddMLKGDialog> {
+class _AddUpdateMLKGDialogState extends State<AddUpdateMLKGDialog> {
+  // Declare the  controllers for textfields.
   TextEditingController ml = new TextEditingController(),
       kg = TextEditingController(),
       comment = TextEditingController();
@@ -27,6 +31,8 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
   void initState() {
     super.initState();
 
+    // If MLKG is supplied, then the textfields are initialized from the
+    // MLKG's attributes.
     if (widget.mlkg != null) {
       kg.text = widget.mlkg.kg;
       ml.text = widget.mlkg.ml;
@@ -34,6 +40,8 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
     }
   }
 
+  // OnTapped listener for + button. Increases value by 1 each time it is clicked.
+  // Invalid values result the field being set to 0.
   void add(TextEditingController controller) {
     int num = 0;
     try {
@@ -46,6 +54,9 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
     controller.text = num.toString();
   }
 
+  // OnTapped listener for - button. Decreases value by 1 each time it is clicked.
+  // Invalid values result the field being set to 0.
+  // Field cannot be negative number, no decrease occurs when value is 0.
   void subtract(TextEditingController controller) {
     int num = 0;
     try {
@@ -74,13 +85,17 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                   IconButton(
                       icon: Icon(Icons.delete),
                       onPressed: () {
+                        // Delete this MLKG item from a fruit.
                         Provider.of<FruitModel>(context, listen: false)
                             .deleteMLKG(widget.mlkg)
                             .then((value) =>
+                                // After deletion, refresh the fruitlist to get the
+                                // updated data.
                                 Provider.of<FruitModel>(context, listen: false)
                                     .refresh(Provider.of<DayModel>(context,
                                             listen: false)
                                         .currentDate))
+                            // Finally, close this dialog.
                             .then((value) => Navigator.of(context).pop());
                       }),
               ],
@@ -93,6 +108,7 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                         controller: kg,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
+                      // Only 0-9 are allowed in the field,
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
                     ])),
                 IconButton(icon: Icon(Icons.add), onPressed: () => add(kg)),
@@ -108,6 +124,7 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                         controller: ml,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
+                      // Only 0-9 are allowed in the field,
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
                     ])),
                 IconButton(icon: Icon(Icons.add), onPressed: () => add(ml)),
@@ -132,6 +149,7 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                 SizedBox(
                   width: 10,
                 ),
+                // If no MLKG is provided, then ADD functionality is displayed.
                 if (widget.mlkg == null)
                   TextButton(
                       onPressed: () {
@@ -139,6 +157,8 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                         String inputKG = kg.text;
                         String inputComment = comment.text;
 
+                        // Construct an MLKG item from the strings in the
+                        // textfields to insert into the database.
                         Provider.of<FruitModel>(context, listen: false)
                             .addMLKG(new MLKG(
                                 fid: widget.fruit.id,
@@ -146,13 +166,18 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                                 kg: inputKG,
                                 comment: inputComment))
                             .then((value) =>
+                                // After addition, update the model's fields to
+                                // reflect the changes in data.
                                 Provider.of<FruitModel>(context, listen: false)
                                     .refresh(Provider.of<DayModel>(context,
                                             listen: false)
                                         .currentDate))
+                            // Successfull insertions leads to
+                            // dialog being dismissed.
                             .then((value) => Navigator.of(context).pop());
                       },
                       child: Text("ADD"))
+                // In case of MLKG being provided, update functionality is run.
                 else
                   TextButton(
                       onPressed: () {
@@ -160,13 +185,19 @@ class _AddMLKGDialogState extends State<AddMLKGDialog> {
                         widget.mlkg.kg = kg.text;
                         widget.mlkg.comment = comment.text;
 
+                        // Update an exisiting MLKG item using data
+                        // from the data present in the textfields.
                         Provider.of<FruitModel>(context, listen: false)
                             .updateMLKG(widget.mlkg)
                             .then((value) =>
+                                // After updating, update the model's fields to
+                                // reflect the changes in data.
                                 Provider.of<FruitModel>(context, listen: false)
                                     .refresh(Provider.of<DayModel>(context,
                                             listen: false)
                                         .currentDate))
+                            // Successfull updating leads to
+                            // dialog being dismissed.
                             .then((value) => Navigator.of(context).pop());
                       },
                       child: Text("UPDATE"))

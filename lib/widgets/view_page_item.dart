@@ -13,8 +13,11 @@ import 'mlkg_dialog.dart';
 // present at the right side of ViewPageItemWidget.
 enum PopupSelection { information, change, delete }
 
+// This widget is shown in the ListViews present on the Day page.
 class ViewPageItemWidget extends StatelessWidget {
+  // The fruit that is shown.
   final Fruit fruit;
+  // Controller for comment field.
   final TextEditingController commentController = new TextEditingController();
 
   ViewPageItemWidget({@required this.fruit});
@@ -34,6 +37,8 @@ class ViewPageItemWidget extends StatelessWidget {
                 height: 150,
                 child: FittedBox(
                   fit: BoxFit.contain,
+                  // Image of the fruits is fruit is obtained by stitching
+                  // together paths present in the assets page.
                   child: Image.asset(basePath +
                       fruit.name.toLowerCase() +
                       "/" +
@@ -70,16 +75,19 @@ class ViewPageItemWidget extends StatelessWidget {
                     ),
                     Flexible(
                       flex: 1,
+                      // MLKG items associated with a fruit are displayed here.
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: fruit.mlkg.length,
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
+                                // Clicking on an MLKG item opens a dialog
+                                // to update them
                                 showDialog(
                                     context: context,
                                     builder: (context) {
-                                      return AddMLKGDialog(
+                                      return AddUpdateMLKGDialog(
                                           fruit: fruit,
                                           mlkg: fruit.mlkg[index]);
                                     });
@@ -94,19 +102,10 @@ class ViewPageItemWidget extends StatelessWidget {
                                 no: index,
                               ),
                             );
-                            // else
-                            //   return IconButton(
-                            //       alignment: Alignment.centerLeft,
-                            //       icon: Icon(Icons.add),
-                            //       onPressed: () {
-                            //         showDialog(
-                            //             context: context,
-                            //             builder: (context) {
-                            //               return AddMLKGDialog(fruit: fruit);
-                            //             });
-                            //       });
                           }),
                     ),
+
+                    // And of course, MLKG items can be added using the add button.
                     IconButton(
                         alignment: Alignment.centerLeft,
                         icon: Icon(Icons.add),
@@ -114,7 +113,7 @@ class ViewPageItemWidget extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return AddMLKGDialog(fruit: fruit);
+                                return AddUpdateMLKGDialog(fruit: fruit);
                               });
                         })
                   ],
@@ -127,9 +126,13 @@ class ViewPageItemWidget extends StatelessWidget {
                 width: 55,
                 height: 150,
                 alignment: Alignment.center,
+
+                // More button opens up a popup with several options.
                 child: PopupMenuButton(
                   onSelected: (PopupSelection result) async {
                     if (result == PopupSelection.change) {
+                      // If the user wants to change the fruit type, then
+                      // a dialog is shown to the user.
                       showDialog(
                               context: context,
                               builder: (_) => NameFruitDialog.forUpdate(fruit))
@@ -139,9 +142,14 @@ class ViewPageItemWidget extends StatelessWidget {
                                 NameFruitDialog.updated = false;
                               });
                     } else if (result == PopupSelection.information) {
+                      // If the user wants to get more information about
+                      // a page then the detail page is opened.
                       Navigator.of(context)
                           .pushNamed('/detail', arguments: fruit);
                     } else {
+                      // Else if the user wants to delete the current fruit,
+                      // then delete is called on the Fruit model and then
+                      // the fruits list is refreshed.
                       Provider.of<FruitModel>(context, listen: false)
                           .deleteFruit(fruit)
                           .then((value) {

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/screens/calender.dart';
 import 'package:fruitapp/screens/day.dart';
 import 'package:fruitapp/screens/detail.dart';
-import './Dialog/NameFruitDialog.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +11,9 @@ import 'models/fruit_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Get storage permission from user
+
+  // Providers at the top of the widget tree for keeping the state visible
+  // everywhere in the application.
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => CalenderModel()),
@@ -25,6 +25,7 @@ Future<void> main() async {
     },
   ));
 
+  // Get storage permission from user
   var status = await Permission.storage.status;
   if (status.isUndetermined) {
     // Need to get read/write permission for SQLite to work.
