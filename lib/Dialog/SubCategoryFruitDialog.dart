@@ -31,7 +31,10 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Align(alignment: Alignment.topLeft, child: Icon(Icons.arrow_back)),
+            Align(alignment: Alignment.topLeft,
+                child: GestureDetector( child:Icon(Icons.arrow_back) ,onTap:(){
+              Navigator.of(context).pop();})
+            ),
             Center(
               child: Text(
                 widget.list[0].gridCardModel.name,
@@ -66,55 +69,58 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> {
                   "Cancel",
                   style: TextStyle(fontSize: 15),
                 )),
-            NameFruitDialog.updated ?Container(): Container(
-              margin: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: RaisedButton(
-                  color: Colors.lightGreen,
-                  onPressed: () async {
-                    String fruitColors = "";
+            NameFruitDialog.updated
+                ? Container()
+                : Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: RaisedButton(
+                        color: Colors.lightGreen,
+                        onPressed: () async {
+                          String fruitColors = "";
 
-                    for (int i = 0;
-                        i < SubNameFruitDialog.selectedList.length;
-                        i++) {
-                      print(SubNameFruitDialog.selectedList[i].type);
-                      // Here We can add food which exist in selectedList by calling Database AddFruit Method
-                      Fruit newFruit = new Fruit(
-                          SubNameFruitDialog.selectedList[i].name,
-                          SubNameFruitDialog.selectedList[i].type,
-                          "",
-                          NameFruitDialog.date,
-                          null);
-                      var result = await DatabaseQuery.db.newFruit(newFruit);
-                      if (!result) {
-                        fruitColors = fruitColors + newFruit.type + "\n";
-                      }
-                    }
+                          for (int i = 0;
+                              i < SubNameFruitDialog.selectedList.length;
+                              i++) {
+                            print(SubNameFruitDialog.selectedList[i].type);
+                            // Here We can add food which exist in selectedList by calling Database AddFruit Method
+                            Fruit newFruit = new Fruit(
+                                SubNameFruitDialog.selectedList[i].name,
+                                SubNameFruitDialog.selectedList[i].type,
+                                "",
+                                NameFruitDialog.date,
+                                null);
+                            var result =
+                                await DatabaseQuery.db.newFruit(newFruit);
+                            if (!result) {
+                              fruitColors = fruitColors + newFruit.type + "\n";
+                            }
+                          }
 
-                    if (fruitColors != "") {
-                      final result = await showDialog(
-                          context: context,
-                          builder: (_) => Dialog(
-                                  child: Column(
-                                children: [
-                                  Text("Following types already exists:"),
-                                  Text(fruitColors),
-                                  RaisedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("Ok"),
-                                  )
-                                ],
-                              )));
-                    }
-                    Navigator.of(context).pop();
-                    //After adding food in database clear the selected List and pop out
-                  },
-                  child: Text(
-                    "Add",
-                    style: TextStyle(fontSize: 15),
-                  )),
-            ),
+                          if (fruitColors != "") {
+                            final result = await showDialog(
+                                context: context,
+                                builder: (_) => Dialog(
+                                        child: Column(
+                                      children: [
+                                        Text("Following types already exists:"),
+                                        Text(fruitColors),
+                                        RaisedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text("Ok"),
+                                        )
+                                      ],
+                                    )));
+                          }
+                          Navigator.of(context).pop();
+                          //After adding food in database clear the selected List and pop out
+                        },
+                        child: Text(
+                          "Add",
+                          style: TextStyle(fontSize: 15),
+                        )),
+                  ),
           ],
         )
       ]),

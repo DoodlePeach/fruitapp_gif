@@ -24,49 +24,50 @@ class _CardState extends State<GridCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-
-          if (widget.gridCardModel.type != "") {
-
-            if(!NameFruitDialog.updated){
-                if (isAdded) {
-                  SubNameFruitDialog.selectedList.remove(widget.gridCardModel);
-                  setState(() {
-                    isAdded = false;
-                  });
-                } else {
-                  SubNameFruitDialog.selectedList.add(widget.gridCardModel);
-                  setState(() {
-                    isAdded = true;
-                  });
-                }
-
+        if (widget.gridCardModel.type != "") {
+          if (!NameFruitDialog.updated) {
+            if (isAdded) {
+              SubNameFruitDialog.selectedList.remove(widget.gridCardModel);
+              setState(() {
+                isAdded = false;
+              });
+            } else {
+              SubNameFruitDialog.selectedList.add(widget.gridCardModel);
+              setState(() {
+                isAdded = true;
+              });
             }
-            else {
-                 SubNameFruitDialog.newFruitSelectedForUpdate = widget.gridCardModel;
-                 showDialog(
-                   context: context,
-                   builder: (_) => Dialog(child: Column(
-                     children: [
-                       Text("Are sure you want to update it? "),
-                       RaisedButton(
-                         onPressed: () async {
-                             NameFruitDialog.previousFruit.name =
-                                 SubNameFruitDialog.newFruitSelectedForUpdate.name;
-                             NameFruitDialog.previousFruit.type =
-                                 SubNameFruitDialog.newFruitSelectedForUpdate.type;
-                             var result = await DatabaseQuery.db.updateFruit(
-                                 NameFruitDialog.previousFruit, false);
-                             Navigator.of(context).pop();
-                        },
-                            child: Text("Yes")),
-                       RaisedButton(onPressed: (){
-                         Navigator.of(context).pop();
-                       },
-                        child: Text("No"),)
-                     ],
-                   ),)
-                 );
-            }
+          } else {
+            SubNameFruitDialog.newFruitSelectedForUpdate = widget.gridCardModel;
+            showDialog(
+                context: context,
+                builder: (_) => Dialog(
+                      child: Column(
+                        children: [
+                          Text("Are sure you want to update it? "),
+                          RaisedButton(
+                              onPressed: () async {
+                                NameFruitDialog.previousFruit.name =
+                                    SubNameFruitDialog
+                                        .newFruitSelectedForUpdate.name;
+                                NameFruitDialog.previousFruit.type =
+                                    SubNameFruitDialog
+                                        .newFruitSelectedForUpdate.type;
+                                var result = await DatabaseQuery.db.updateFruit(
+                                    NameFruitDialog.previousFruit, false);
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("Yes")),
+                          RaisedButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text("No"),
+                          )
+                        ],
+                      ),
+                    ));
+          }
         } else {
           List<GridCard> list = [
             GridCard(new GridCardModel(
@@ -128,12 +129,12 @@ class _CardState extends State<GridCard> {
           ];
           await showDialog(
             context: context,
-            builder: (_) => SubNameFruitDialog(list:list),
+            builder: (_) => SubNameFruitDialog(list: list),
           ).then((value) => {
-            NameFruitDialog.updated = false,
-            Provider.of<FruitModel>(context, listen: false).refresh(
-                Provider.of<DayModel>(context, listen: false).currentDate)
-          });
+                NameFruitDialog.updated = false,
+                Provider.of<FruitModel>(context, listen: false).refresh(
+                    Provider.of<DayModel>(context, listen: false).currentDate)
+              });
         }
       },
       child: SizedBox(

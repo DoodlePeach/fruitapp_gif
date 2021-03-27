@@ -14,7 +14,7 @@ class NameFruitDialog extends StatefulWidget {
     NameFruitDialog.date = date;
   }
 
-  NameFruitDialog.forUpdate(Fruit fruit){
+  NameFruitDialog.forUpdate(Fruit fruit) {
     updated = true;
     previousFruit = fruit;
   }
