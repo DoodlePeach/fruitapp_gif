@@ -4,6 +4,8 @@ import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
+import 'package:fruitapp/screens/categorySize.dart';
+import 'package:fruitapp/screens/timer.dart';
 import 'package:fruitapp/widgets/mlkg.dart';
 import 'package:fruitapp/widgets/mlkg_dialog.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +25,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   TextEditingController _controller = new TextEditingController();
   bool firstBuild = true;
-
+  CategorySize categorySize;
   @override
   Widget build(BuildContext context) {
     Fruit fruit = ModalRoute.of(context).settings.arguments;
@@ -166,6 +168,10 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(50,0,0,0),
+                    child: Center(child: TimerApp()),
+                  ),
                   Container(
                     width: 300,
                     child: TextField(
@@ -205,16 +211,22 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
                   ),
-                  IconButton(
-                      alignment: Alignment.centerLeft,
-                      icon: Icon(Icons.add),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AddMLKGDialog(fruit: fruit);
-                            });
-                      }),
+                  Row(
+                    children:[
+                      SizedBox(width: 20,),
+                      IconButton(
+                        alignment: Alignment.centerLeft,
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AddMLKGDialog(fruit: fruit);
+                              });
+                        }),
+                      categorySize= CategorySize(selected:"None", clickEnable:true),
+                    ]
+                  ),
                   Container(
                     padding: EdgeInsets.all(7),
                     height: 80,
@@ -224,6 +236,7 @@ class _DetailPageState extends State<DetailPage> {
                         child: Text("UPDATE"),
                         onPressed: () {
                           fruit.comment = _controller.text;
+                          fruit.categorySize = categorySize.selected;
                           FruitModel model =
                               Provider.of<FruitModel>(context, listen: false);
 

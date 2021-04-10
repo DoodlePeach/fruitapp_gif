@@ -107,10 +107,10 @@ class DayPage extends StatelessWidget {
                 return NameFruitDialog(
                     "${currentDate.day}/${currentDate.month}/${currentDate.year}");
               }).then((value) => {
-                SubNameFruitDialog.selectedList.clear(),
-                Provider.of<FruitModel>(context, listen: false).refresh(
-                    Provider.of<DayModel>(context, listen: false).currentDate)
-              });
+            SubNameFruitDialog.selectedList.clear(),
+            Provider.of<FruitModel>(context, listen: false).refresh(
+                Provider.of<DayModel>(context, listen: false).currentDate)
+          });
         },
       ),
     );
