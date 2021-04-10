@@ -56,7 +56,7 @@ class DatabaseQuery {
 
   //Updating MLKG in the database using date
   updateMLKG(MLKG mlkg, bool toastOption) async {
-    print("MLKGssss:"+mlkg.id.toString());
+    print("MLKGssss:" + mlkg.id.toString());
     final db = await database;
     try {
       //Query for updating MLKG
@@ -71,7 +71,7 @@ class DatabaseQuery {
 
   //Delete MLKG from database using date.
   Future deleteMLKG(MLKG mlkg) async {
-    print("mlkg delete"+mlkg.id.toString());
+    print("mlkg delete" + mlkg.id.toString());
     final db = await database;
     try {
       //Query for deleting MLKG from database
@@ -143,28 +143,54 @@ class DatabaseQuery {
 
 // Fetching Fruits from database
   Future<List<Fruit>> getAllFruits(String name, String date) async {
-
     final db = await database;
     var res = await db
         .rawQuery('SELECT * FROM Fruit WHERE name=? AND date=?', [name, date]);
 
     //Fetching records from database and convert into Fruit type objects
-    List<Fruit> list = res.isNotEmpty ? res.map((c) => Fruit.fromMap(c)).toList() : [];
+    List<Fruit> list =
+        res.isNotEmpty ? res.map((c) => Fruit.fromMap(c)).toList() : [];
 
     var weight;
     //Fetching MLKG for each Fruit
     for (int i = 0; i < list.length; i++) {
-      print("Fid:"+list[i].id.toString());
+      print("Fid:" + list[i].id.toString());
 
-      weight =  await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
+      weight =
+          await db.rawQuery('SELECT * FROM MLKG WHERE fid=?', [list[i].id]);
       // print("List return:"+weight.length.toString());
-      for (var item in weight){
+      for (var item in weight) {
         list[i].mlkg.add(new MLKG.fromMap(item));
       }
 
-      print("Fid:"+list[i].id.toString() + "  Mlkg : "+ list[i].mlkg.length.toString());
-
+      print("Fid:" +
+          list[i].id.toString() +
+          "  Mlkg : " +
+          list[i].mlkg.length.toString());
     }
     return list;
+  }
+
+  // Get all UNIQUE dates that have been inserted into the databse.
+  Future<List<DateTime>> getAllDates() async {
+    final db = await database;
+    final List<Map<String, dynamic>> rows =
+        await db.query("Fruit", distinct: true, columns: ["date"]);
+    final dates = <DateTime>[];
+
+    rows.forEach((Map<String, dynamic> element) {
+      // Need to split date in dd/mm/yyyy format into a list like [dd, mm, yyyy]
+      // to convert it into a DateTime object.
+      List<String> dayMonthYear = element["date"].split('/');
+
+      // Datetime accepts dates in int format, with first argument being
+      // the year, then the month and then the day.
+      DateTime fruitDate = DateTime(int.parse(dayMonthYear[2]),
+          int.parse(dayMonthYear[1]), int.parse(dayMonthYear[0]));
+
+      dates.add(fruitDate);
+    });
+
+    return dates;
   }
 }

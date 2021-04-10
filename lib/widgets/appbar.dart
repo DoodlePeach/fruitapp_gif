@@ -19,6 +19,7 @@ class StandardAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Navigator.pop(context);
                 calenderModel.isCalenderOpen = false;
               } else {
+                calenderModel.refreshEvents();
                 Navigator.pushNamed(context, '/calender');
                 calenderModel.isCalenderOpen = true;
               }

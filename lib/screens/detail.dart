@@ -49,6 +49,7 @@ class _DetailPageState extends State<DetailPage> {
                   Navigator.pop(context);
                   calenderModel.isCalenderOpen = false;
                 } else {
+                  calenderModel.refreshEvents();
                   Navigator.pushNamed(context, '/calender');
                   calenderModel.isCalenderOpen = true;
                 }

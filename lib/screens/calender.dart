@@ -8,22 +8,23 @@ import 'package:table_calendar/table_calendar.dart';
 class CalenderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final CalendarController calendarController =
-        Provider.of<CalenderModel>(context, listen: false).controller;
-
     return Scaffold(
       appBar: StandardAppBar(),
-      body: Container(
-        child: TableCalendar(
-          calendarController: calendarController,
-          initialSelectedDay:
-              Provider.of<DayModel>(context, listen: false).currentDate,
-          onDaySelected: (DateTime selected, _, __) {
-            Provider.of<DayModel>(context, listen: false).setNewDate(selected);
-            Navigator.pushNamed(context, '/day');
-          },
-        ),
-      ),
+      body: Container(child: Consumer<CalenderModel>(
+        builder: (context, data, child) {
+          return TableCalendar(
+            calendarController: data.controller,
+            initialSelectedDay:
+                Provider.of<DayModel>(context, listen: false).currentDate,
+            onDaySelected: (DateTime selected, _, __) {
+              Provider.of<DayModel>(context, listen: false)
+                  .setNewDate(selected);
+              Navigator.pushNamed(context, '/day');
+            },
+            events: data.datesWithFruits,
+          );
+        },
+      )),
     );
   }
 }

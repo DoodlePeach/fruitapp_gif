@@ -64,9 +64,61 @@ class ViewPageItemWidget extends StatelessWidget {
                                 fontWeight: FontWeight.bold, fontSize: 18))
                       ],
                     ),
-                    TextField(
-                      controller: commentController,
-                      decoration: const InputDecoration(hintText: "comments"),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              final TextEditingController
+                                  dialogEditingController =
+                                  new TextEditingController();
+
+                              dialogEditingController.text = fruit.comment;
+
+                              return AlertDialog(
+                                content: Container(
+                                    child: TextField(
+                                  maxLines: 5,
+                                  minLines: 1,
+                                  controller: dialogEditingController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Fruit Comment',
+                                    labelStyle: TextStyle(
+                                      color: Color(0xFF6200EE),
+                                    ),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xFF6200EE)),
+                                    ),
+                                  ),
+                                )),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        fruit.comment =
+                                            dialogEditingController.text;
+
+                                        Provider.of<FruitModel>(context,
+                                                listen: false)
+                                            .updateFruit(fruit)
+                                            .then((value) =>
+                                                Navigator.of(context).pop());
+                                      },
+                                      child: Text('Update')),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Cancel')),
+                                ],
+                              );
+                            });
+                      },
+                      child: TextField(
+                        enabled: false,
+                        controller: commentController,
+                        decoration: const InputDecoration(hintText: "comments"),
+                      ),
                     ),
                     Flexible(
                       flex: 1,
@@ -91,7 +143,7 @@ class ViewPageItemWidget extends StatelessWidget {
                                 ml: fruit.mlkg[index].ml != null
                                     ? fruit.mlkg[index].ml
                                     : "-",
-                                no: index,
+                                no: index + 1,
                               ),
                             );
                             // else
