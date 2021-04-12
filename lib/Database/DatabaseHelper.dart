@@ -27,6 +27,8 @@ class DatabaseQuery {
           "type TEXT,"
           "comment TEXT,"
           "date TEXT,"
+          "time TEXT,"
+          "categorySize,"
           "id INTEGER PRIMARY KEY"
           ")");
 

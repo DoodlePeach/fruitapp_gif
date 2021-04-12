@@ -4,6 +4,7 @@ import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/assets.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
+import 'package:fruitapp/screens/categorySize.dart';
 import 'package:fruitapp/widgets/mlkg.dart';
 import 'package:provider/provider.dart';
 import '../Fruit.dart';
@@ -168,7 +169,8 @@ class ViewPageItemWidget extends StatelessWidget {
                               builder: (context) {
                                 return AddMLKGDialog(fruit: fruit);
                               });
-                        })
+                        }),
+                    CategorySize(selected:fruit.categorySize,clickEnable:false),
                   ],
                 ),
               ),
