@@ -19,17 +19,22 @@ class DetailTabsPage extends StatefulWidget {
 class _DetailTabsPageState extends State<DetailTabsPage> {
   bool firstBuild = true;
 
+  List<String> itemNumbers = [];
+  List<String> kgInItems = [];
+  List<String> mlInItems = [];
+  String time ;
+
   @override
   Widget build(BuildContext context) {
     Fruit fruit = ModalRoute.of(context).settings.arguments;
     fruit = Provider.of<FruitModel>(context, listen: false).getReference(fruit);
 
-    List<int> itemNumbers = [];
-    List<String> kgInItems = [];
-    List<String> mlInItems = [];
+    time= fruit.time;
+    int count=0;
 
     fruit.mlkg.forEach((element) {
-      itemNumbers.add(element.id);
+      count++;
+      itemNumbers.add(count.toString());
       kgInItems.add(element.kg);
       mlInItems.add(element.ml);
     });
@@ -140,10 +145,15 @@ class _DetailTabsPageState extends State<DetailTabsPage> {
             child: TabBarView(
               children: [
                 DetailPage(),
-                Statistics(),
+                Statistics(noYValues:itemNumbers,mlYValues:mlInItems,kgYValues:kgInItems,time:time),
               ],
             ),
           ),
         ));
   }
 }
+//
+// List<String> itemNumbers = [];
+// List<String> kgInItems = [];
+// List<String> mlInItems = [];
+// String time = fruit.time;

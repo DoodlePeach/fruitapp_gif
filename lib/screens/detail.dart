@@ -26,11 +26,12 @@ class _DetailPageState extends State<DetailPage> {
   TextEditingController _controller = new TextEditingController();
   bool firstBuild = true;
   CategorySize categorySize;
+
   @override
   Widget build(BuildContext context) {
     Fruit fruit = ModalRoute.of(context).settings.arguments;
     fruit = Provider.of<FruitModel>(context, listen: false).getReference(fruit);
-
+    TimerApp.time =  "00:00:00";
     if (firstBuild) {
       _controller.text = fruit.comment;
       firstBuild = false;
@@ -151,6 +152,7 @@ class _DetailPageState extends State<DetailPage> {
                       onPressed: () {
                         fruit.comment = _controller.text;
                         fruit.categorySize = categorySize.selected;
+                        fruit.time = TimerApp.time;
                         FruitModel model =
                             Provider.of<FruitModel>(context, listen: false);
 

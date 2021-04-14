@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class TimerApp extends StatefulWidget {
 
-  static String time = "00:00:00";
+  static String time;
 
   @override
   _TimerAppState createState() => _TimerAppState();
