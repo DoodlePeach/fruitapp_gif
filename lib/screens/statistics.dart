@@ -3,19 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:fruitapp/Chart/line_chart_widget.dart';
 import 'package:fruitapp/widgets/appbar.dart';
 
-// Statistics(["0","2000","500","300","900"],["0","500","1000","300","900"],["0","1000","500","300","900"],time)
 
-class Statistics extends StatelessWidget {
+// Statistics(noYValues:["0","2000","500","300","900"],mlYValues:["0","500","1000","300","900"],kgYValues:["0","1000","500","300","900"],time:"00:00:00")
 
-  List<String> noXValues =[], noYValues=[];
-  List<String> mlXValues =[], mlYValues=[];
-  List<String> kgXValues =[], kgYValues=[];
+class Statistics extends StatefulWidget {
+
+  final List<String> noYValues;
+  final List<String> mlYValues;
+  final List<String> kgYValues;
+  final String time;
+
+  Statistics({this.noYValues,this.mlYValues,this.kgYValues,this.time});
+
+  @override
+  _Statistics createState() => _Statistics(noYValues,mlYValues,kgYValues,time);
+}
+
+class _Statistics extends State<Statistics> {
+
+  List<String> noYValues=[];
+  List<String> mlYValues=[];
+  List<String> kgYValues=[];
   final List<FlSpot> noflSpot = [];
   final List<FlSpot> mlflSpot = [];
   final List<FlSpot> kgflSpot = [];
   String time="00:00:00";
 
-  Statistics(List<String>noYValues,List<String>mlYValues,List<String>kgYValues,String time){
+  _Statistics(List<String>noYValues,List<String>mlYValues,List<String>kgYValues,String time){
 
     if(noYValues!=null) {
       for (int i = 0; i < noYValues.length; i++) {
@@ -39,58 +53,63 @@ class Statistics extends StatelessWidget {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: StandardAppBar(),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0,20,0,0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20,0,0,20),
-                      child: Text("No:",style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
-                    )],
-                ),
-                Row(
-                  children: [LineChartWidget(spotList:noflSpot,xValues:noXValues,yValues:noYValues)],),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20,0,0,20),
-                      child: Text("ML:",style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
-                    )],
-                ),
-                Row(
-                  children: [Center(child: LineChartWidget(spotList:mlflSpot,xValues:mlXValues,yValues:mlYValues))],),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20,0,0,20),
-                      child: Text("Kg:",style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
-                    )],
-                ),
-                Row(
-                  children: [Center(child: LineChartWidget(spotList:kgflSpot,xValues:kgXValues,yValues:kgYValues))],),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20,0,0,20),
-                      child: Text("Time:",style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
-                    )],
-                ),
-                Row(
-                  children: [Center(child: Text(this.time))])
-              ],
+    return Container(
+      child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0,20,0,0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20,0,0,20),
+                        child: Text("No:",style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+                      )],
+                  ),
+                  Row(
+                    children: [LineChartWidget(spotList:noflSpot,yValues:noYValues)],),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20,0,0,20),
+                        child: Text("ML:",style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+                      )],
+                  ),
+                  Row(
+                    children: [Center(child: LineChartWidget(spotList:mlflSpot,yValues:mlYValues))],),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20,0,0,20),
+                        child: Text("Kg:",style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+                      )],
+                  ),
+                  Row(
+                    children: [Center(child: LineChartWidget(spotList:kgflSpot,yValues:kgYValues))],),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20,0,0,20),
+                        child: Text("Time:",style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+                      )],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Text(this.time,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    )])
+                ],
+              ),
             ),
           ),
-        ));
+    );
   }
 }
