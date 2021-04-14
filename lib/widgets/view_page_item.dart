@@ -25,217 +25,227 @@ class ViewPageItemWidget extends StatelessWidget {
     commentController.text = fruit.comment == null ? "" : fruit.comment;
 
     return Card(
-      child: Container(
-        padding: EdgeInsets.all(5),
-        child: Row(
-          children: [
-            Expanded(
-              child: SizedBox(
-                width: 50,
-                height: 150,
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: Image.asset(basePath +
-                      fruit.name.toLowerCase() +
-                      "/" +
-                      paths[fruit.name.toLowerCase()]["variants"]
-                          [fruit.type.toLowerCase()]),
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(5),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    width: 50,
+                    height: 150,
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: Image.asset(basePath +
+                          fruit.name.toLowerCase() +
+                          "/" +
+                          paths[fruit.name.toLowerCase()]["variants"]
+                              [fruit.type.toLowerCase()]),
+                    ),
+                  ),
+                  flex: 2,
                 ),
-              ),
-              flex: 2,
-            ),
-            Expanded(
-              child: Container(
-                height: 200,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+                Expanded(
+                  child: Container(
+                    height: 150,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          fruit.name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                        Row(
+                          children: [
+                            Text(
+                              fruit.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(fruit.type,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18))
+                          ],
                         ),
-                        SizedBox(
-                          width: 10,
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (_) {
+                                  final TextEditingController
+                                      dialogEditingController =
+                                      new TextEditingController();
+
+                                  dialogEditingController.text = fruit.comment;
+
+                                  return AlertDialog(
+                                    content: Container(
+                                        child: TextField(
+                                      maxLines: 5,
+                                      minLines: 1,
+                                      controller: dialogEditingController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Fruit Comment',
+                                        labelStyle: TextStyle(
+                                          color: Color(0xFF6200EE),
+                                        ),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Color(0xFF6200EE)),
+                                        ),
+                                      ),
+                                    )),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            fruit.comment =
+                                                dialogEditingController.text;
+
+                                            Provider.of<FruitModel>(context,
+                                                    listen: false)
+                                                .updateFruit(fruit)
+                                                .then((value) =>
+                                                    Navigator.of(context).pop());
+                                          },
+                                          child: Text('Update')),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Cancel')),
+                                    ],
+                                  );
+                                });
+                          },
+                          child: TextField(
+                            enabled: false,
+                            controller: commentController,
+                            decoration: const InputDecoration(hintText: "comments"),
+                          ),
                         ),
-                        Text(fruit.type,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18))
+                        Flexible(
+                          flex: 1,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: fruit.mlkg.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AddMLKGDialog(
+                                              fruit: fruit,
+                                              mlkg: fruit.mlkg[index]);
+                                        });
+                                  },
+                                  child: MLKGWidget(
+                                    kg: fruit.mlkg[index].kg != null
+                                        ? fruit.mlkg[index].kg
+                                        : "-",
+                                    ml: fruit.mlkg[index].ml != null
+                                        ? fruit.mlkg[index].ml
+                                        : "-",
+                                    no: index + 1,
+                                  ),
+                                );
+                                // else
+                                //   return IconButton(
+                                //       alignment: Alignment.centerLeft,
+                                //       icon: Icon(Icons.add),
+                                //       onPressed: () {
+                                //         showDialog(
+                                //             context: context,
+                                //             builder: (context) {
+                                //               return AddMLKGDialog(fruit: fruit);
+                                //             });
+                                //       });
+                              }),
+                        ),
                       ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) {
-                              final TextEditingController
-                                  dialogEditingController =
-                                  new TextEditingController();
-
-                              dialogEditingController.text = fruit.comment;
-
-                              return AlertDialog(
-                                content: Container(
-                                    child: TextField(
-                                  maxLines: 5,
-                                  minLines: 1,
-                                  controller: dialogEditingController,
-                                  decoration: InputDecoration(
-                                    labelText: 'Fruit Comment',
-                                    labelStyle: TextStyle(
-                                      color: Color(0xFF6200EE),
-                                    ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Color(0xFF6200EE)),
-                                    ),
-                                  ),
-                                )),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        fruit.comment =
-                                            dialogEditingController.text;
-
-                                        Provider.of<FruitModel>(context,
-                                                listen: false)
-                                            .updateFruit(fruit)
-                                            .then((value) =>
-                                                Navigator.of(context).pop());
-                                      },
-                                      child: Text('Update')),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('Cancel')),
-                                ],
-                              );
-                            });
-                      },
-                      child: TextField(
-                        enabled: false,
-                        controller: commentController,
-                        decoration: const InputDecoration(hintText: "comments"),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: fruit.mlkg.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AddMLKGDialog(
-                                          fruit: fruit,
-                                          mlkg: fruit.mlkg[index]);
-                                    });
-                              },
-                              child: MLKGWidget(
-                                kg: fruit.mlkg[index].kg != null
-                                    ? fruit.mlkg[index].kg
-                                    : "-",
-                                ml: fruit.mlkg[index].ml != null
-                                    ? fruit.mlkg[index].ml
-                                    : "-",
-                                no: index + 1,
-                              ),
-                            );
-                            // else
-                            //   return IconButton(
-                            //       alignment: Alignment.centerLeft,
-                            //       icon: Icon(Icons.add),
-                            //       onPressed: () {
-                            //         showDialog(
-                            //             context: context,
-                            //             builder: (context) {
-                            //               return AddMLKGDialog(fruit: fruit);
-                            //             });
-                            //       });
-                          }),
-                    ),
-                    IconButton(
-                        alignment: Alignment.centerLeft,
-                        icon: Icon(Icons.add),
-                        onPressed: () {
+                  ),
+                  flex: 5,
+                ),
+                Expanded(
+                  child: Container(
+                    width: 55,
+                    height: 150,
+                    alignment: Alignment.center,
+                    child: PopupMenuButton(
+                      onSelected: (PopupSelection result) async {
+                        if (result == PopupSelection.change) {
                           showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AddMLKGDialog(fruit: fruit);
-                              });
-                        }),
-                    CategorySize(selected:fruit.categorySize,clickEnable:false),
-                  ],
+                                  context: context,
+                                  builder: (_) => NameFruitDialog.forUpdate(fruit))
+                              .then((value) => () {
+                                    SubNameFruitDialog.newFruitSelectedForUpdate =
+                                        null;
+                                    NameFruitDialog.updated = false;
+                                  });
+                        } else if (result == PopupSelection.information) {
+                          Navigator.of(context)
+                              .pushNamed('/detail', arguments: fruit);
+                        } else {
+                          Provider.of<FruitModel>(context, listen: false)
+                              .deleteFruit(fruit)
+                              .then((value) {
+                            Provider.of<FruitModel>(context, listen: false).refresh(
+                                Provider.of<DayModel>(context, listen: false)
+                                    .currentDate);
+                          });
+                        }
+                      },
+                      icon: Icon(Icons.more_vert),
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<PopupSelection>>[
+                        const PopupMenuItem(
+                          child: ListTile(
+                            leading: Icon(Icons.info_outline),
+                            title: Text("Information"),
+                          ),
+                          value: PopupSelection.information,
+                        ),
+                        const PopupMenuItem(
+                          child: ListTile(
+                            leading: Icon(Icons.refresh),
+                            title: Text("Change to another"),
+                          ),
+                          value: PopupSelection.change,
+                        ),
+                        const PopupMenuItem(
+                          child: ListTile(
+                            leading: Icon(Icons.clear),
+                            title: Text("Remove Fruit"),
+                          ),
+                          value: PopupSelection.delete,
+                        ),
+                      ],
+                    ),
+                  ),
+                  flex: 1,
                 ),
-              ),
-              flex: 4,
+              ],
             ),
-            Expanded(
-              child: Container(
-                width: 55,
-                height: 150,
-                alignment: Alignment.center,
-                child: PopupMenuButton(
-                  onSelected: (PopupSelection result) async {
-                    if (result == PopupSelection.change) {
-                      showDialog(
-                              context: context,
-                              builder: (_) => NameFruitDialog.forUpdate(fruit))
-                          .then((value) => () {
-                                SubNameFruitDialog.newFruitSelectedForUpdate =
-                                    null;
-                                NameFruitDialog.updated = false;
-                              });
-                    } else if (result == PopupSelection.information) {
-                      Navigator.of(context)
-                          .pushNamed('/detail', arguments: fruit);
-                    } else {
-                      Provider.of<FruitModel>(context, listen: false)
-                          .deleteFruit(fruit)
-                          .then((value) {
-                        Provider.of<FruitModel>(context, listen: false).refresh(
-                            Provider.of<DayModel>(context, listen: false)
-                                .currentDate);
-                      });
-                    }
-                  },
-                  icon: Icon(Icons.more_vert),
-                  itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<PopupSelection>>[
-                    const PopupMenuItem(
-                      child: ListTile(
-                        leading: Icon(Icons.info_outline),
-                        title: Text("Information"),
-                      ),
-                      value: PopupSelection.information,
-                    ),
-                    const PopupMenuItem(
-                      child: ListTile(
-                        leading: Icon(Icons.refresh),
-                        title: Text("Change to another"),
-                      ),
-                      value: PopupSelection.change,
-                    ),
-                    const PopupMenuItem(
-                      child: ListTile(
-                        leading: Icon(Icons.clear),
-                        title: Text("Remove Fruit"),
-                      ),
-                      value: PopupSelection.delete,
-                    ),
-                  ],
-                ),
-              ),
-              flex: 1,
-            ),
-          ],
-        ),
+          ),
+          Row(
+            mainAxisAlignment:MainAxisAlignment.center,
+            children: [
+              IconButton(
+                  alignment: Alignment.centerLeft,
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AddMLKGDialog(fruit: fruit);
+                        });
+                  }),
+              CategorySize(selected:fruit.categorySize,clickEnable:false),
+            ],
+          ),
+
+        ],
       ),
     );
   }

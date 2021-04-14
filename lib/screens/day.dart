@@ -7,6 +7,8 @@ import 'package:fruitapp/widgets/appbar.dart';
 import 'package:fruitapp/widgets/view_page_item.dart';
 import 'package:provider/provider.dart';
 
+import 'statistics.dart';
+
 class DayPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

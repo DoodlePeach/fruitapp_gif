@@ -5,7 +5,7 @@ import 'line_titles.dart';
 
 class LineChartWidget extends StatelessWidget {
   final List<FlSpot> spotList;
-  final List<String> xValues, yValues;
+  final List<String>  xValues=[],yValues;
 
   // Setting Color schemes for chart
   final List<Color> gradientColors = [
@@ -13,7 +13,7 @@ class LineChartWidget extends StatelessWidget {
     const Color(0xff02d39a),
   ];
 
-  LineChartWidget({this.spotList, this.xValues, this.yValues});
+  LineChartWidget({this.spotList, this.yValues});
 
   @override
   Widget build(BuildContext context) => LineChart(
