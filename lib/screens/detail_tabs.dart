@@ -5,6 +5,7 @@ import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/screens/detail.dart';
+import 'package:fruitapp/screens/statistics.dart';
 import 'package:fruitapp/widgets/appbar.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,16 @@ class _DetailTabsPageState extends State<DetailTabsPage> {
   Widget build(BuildContext context) {
     Fruit fruit = ModalRoute.of(context).settings.arguments;
     fruit = Provider.of<FruitModel>(context, listen: false).getReference(fruit);
+
+    List<int> itemNumbers = [];
+    List<String> kgInItems = [];
+    List<String> mlInItems = [];
+
+    fruit.mlkg.forEach((element) {
+      itemNumbers.add(element.id);
+      kgInItems.add(element.kg);
+      mlInItems.add(element.ml);
+    });
 
     if (firstBuild) firstBuild = false;
 
@@ -129,7 +140,7 @@ class _DetailTabsPageState extends State<DetailTabsPage> {
             child: TabBarView(
               children: [
                 DetailPage(),
-                Icon(Icons.directions_transit),
+                Statistics(),
               ],
             ),
           ),
