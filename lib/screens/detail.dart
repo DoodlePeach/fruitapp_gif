@@ -96,9 +96,11 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                        child: Center(child: TimerApp()),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TimerApp(),
+                        ],
                       ),
                       Container(
                         width: 300,
@@ -133,7 +135,7 @@ class _DetailPageState extends State<DetailPage> {
                                   ml: snapshot.data.mlkg[index].ml != null
                                       ? snapshot.data.mlkg[index].ml
                                       : "-",
-                                  no: index,
+                                  no: index+1,
                                 ),
                               );
                             },
@@ -155,7 +157,7 @@ class _DetailPageState extends State<DetailPage> {
                                   });
                             }),
                         categorySize =
-                            CategorySize(selected: "None", clickEnable: true),
+                            CategorySize(selected: snapshot.data.categorySize, clickEnable: true),
                       ]),
                       Container(
                         padding: EdgeInsets.all(7),

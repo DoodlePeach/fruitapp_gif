@@ -31,7 +31,7 @@ class _Statistics extends State<Statistics> {
 
   _Statistics(List<String>noYValues,List<String>mlYValues,List<String>kgYValues,String time){
 
-    if(noYValues!=null) {
+    if(noYValues.length>0) {
       for (int i = 0; i < noYValues.length; i++) {
         this.noflSpot.add(
             FlSpot(double.parse(i.toString()), double.parse(noYValues[i])));
@@ -43,7 +43,6 @@ class _Statistics extends State<Statistics> {
         this.noYValues = noYValues;
         this.kgYValues = kgYValues;
         this.mlYValues = mlYValues;
-        this.time = time;
       }
     }
     else{
@@ -51,6 +50,7 @@ class _Statistics extends State<Statistics> {
       this.mlflSpot.add(FlSpot(0,0));
       this.kgflSpot.add(FlSpot(0,0));
     }
+    this.time = time;
   }
 
 

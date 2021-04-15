@@ -146,7 +146,7 @@ class _DetailTabsPageState extends State<DetailTabsPage> {
                         List<String> mlInItems = [];
 
                         for (int i = 0; i < snapshot.data.mlkg.length; i++) {
-                          itemNumbers.add(i.toString());
+                          itemNumbers.add((i+1).toString());
                           kgInItems.add(snapshot.data.mlkg[i].kg);
                           mlInItems.add(snapshot.data.mlkg[i].ml);
                         }
