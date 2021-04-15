@@ -67,7 +67,7 @@ class DatabaseQuery {
       if (toastOption) Fluttertoast.showToast(msg: "Updated Successfully");
     } on DatabaseException {
       // If exception is thrown by database
-      Fluttertoast.showToast(msg: "Not Updated");
+      Fluttertoast.showToast(msg: StackTrace.current.toString());
     }
   }
 
@@ -117,6 +117,7 @@ class DatabaseQuery {
           where: "id = ?", whereArgs: [newFruit.id]);
       if (toastOption) Fluttertoast.showToast(msg: "Updated Successfully");
     } on DatabaseException {
+      print(StackTrace.current.toString());
       // If exception is thrown by database
       Fluttertoast.showToast(msg: "Not Updated");
     }
@@ -194,5 +195,28 @@ class DatabaseQuery {
     });
 
     return dates;
+  }
+
+  // Get a single fruit (matching the specified ID) and it's
+  // associated MLKG items from the database.
+  Future<Fruit> getFruit(int id) async {
+    final db = await database;
+
+    // First get the fruit
+    final List<Map<String, dynamic>> row =
+        await db.query("Fruit", where: "id = ?", whereArgs: [id]);
+
+    Fruit fetched = Fruit.fromMap(row.first);
+
+    // And then get the MLKGs.
+    final List<Map<String, dynamic>> mlkgs =
+        await db.query("MLKG", where: "fid = ?", whereArgs: [id]);
+
+    // Finally, append the MLKG items to the Fruit.
+    mlkgs.forEach((element) {
+      fetched.mlkg.add(new MLKG.fromMap(element));
+    });
+
+    return fetched;
   }
 }

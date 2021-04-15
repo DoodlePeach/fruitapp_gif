@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/Dialog/NameFruitDialog.dart';
 import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
 import 'package:fruitapp/models/calender_model.dart';
@@ -6,7 +7,6 @@ import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/screens/detail.dart';
 import 'package:fruitapp/screens/statistics.dart';
-import 'package:fruitapp/widgets/appbar.dart';
 import 'package:provider/provider.dart';
 
 import '../Fruit.dart';
@@ -19,25 +19,10 @@ class DetailTabsPage extends StatefulWidget {
 class _DetailTabsPageState extends State<DetailTabsPage> {
   bool firstBuild = true;
 
-  List<String> itemNumbers = [];
-  List<String> kgInItems = [];
-  List<String> mlInItems = [];
-  String time ;
-
   @override
   Widget build(BuildContext context) {
     Fruit fruit = ModalRoute.of(context).settings.arguments;
     fruit = Provider.of<FruitModel>(context, listen: false).getReference(fruit);
-
-    time= fruit.time;
-    int count=0;
-
-    fruit.mlkg.forEach((element) {
-      count++;
-      itemNumbers.add(count.toString());
-      kgInItems.add(element.kg);
-      mlInItems.add(element.ml);
-    });
 
     if (firstBuild) firstBuild = false;
 
@@ -145,7 +130,37 @@ class _DetailTabsPageState extends State<DetailTabsPage> {
             child: TabBarView(
               children: [
                 DetailPage(),
-                Statistics(noYValues:itemNumbers,mlYValues:mlInItems,kgYValues:kgInItems,time:time),
+                Consumer<FruitModel>(
+                  builder: (context, data, child) {
+                    return FutureBuilder(
+                      future: DatabaseQuery.db.getFruit(fruit.id),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData)
+                          return Container(
+                              child: Center(
+                            child: CircularProgressIndicator(),
+                          ));
+
+                        List<String> itemNumbers = [];
+                        List<String> kgInItems = [];
+                        List<String> mlInItems = [];
+
+                        for (int i = 0; i < snapshot.data.mlkg.length; i++) {
+                          itemNumbers.add(i.toString());
+                          kgInItems.add(snapshot.data.mlkg[i].kg);
+                          mlInItems.add(snapshot.data.mlkg[i].ml);
+                        }
+
+                        return Statistics(
+                            noYValues: itemNumbers,
+                            mlYValues: mlInItems,
+                            kgYValues: kgInItems,
+                            time: snapshot.data.time);
+                        ;
+                      },
+                    );
+                  },
+                )
               ],
             ),
           ),
