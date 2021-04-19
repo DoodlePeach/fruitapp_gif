@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
-import 'package:fruitapp/Dialog/NameFruitDialog.dart';
-import 'package:fruitapp/Dialog/SubCategoryFruitDialog.dart';
-import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/screens/categorySize.dart';
@@ -52,13 +49,18 @@ class _DetailPageState extends State<DetailPage> {
 
               return SingleChildScrollView(
                 child: Container(
-                  height: MediaQuery.of(context).size.height - kToolbarHeight,
+                  padding: EdgeInsets.all(5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Center(
-                        child: Text(snapshot.data.name,
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Center(
+                          child: Text(snapshot.data.name,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 20)),
+                        ),
                       ),
                       Container(
                         padding: EdgeInsets.all(7),
@@ -71,8 +73,8 @@ class _DetailPageState extends State<DetailPage> {
                                     basePath +
                                         snapshot.data.name.toLowerCase() +
                                         "/" +
-                                        paths[snapshot.data.name.toLowerCase()]
-                                                ["variants"]
+                                        details[snapshot.data.name
+                                                .toLowerCase()]["variants"]
                                             [snapshot.data.type.toLowerCase()],
                                     height: 220),
                                 Row(
@@ -90,6 +92,16 @@ class _DetailPageState extends State<DetailPage> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold))
                                   ],
+                                ),
+                                Divider(),
+                                // Description is static and stored in assets.dart
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 2),
+                                  child: Text(
+                                      details[snapshot.data.name.toLowerCase()]
+                                              ["description"]
+                                          [snapshot.data.type.toLowerCase()]),
                                 )
                               ],
                             ),

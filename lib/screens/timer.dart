@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class TimerApp extends StatefulWidget {
-
   static String time;
 
   @override
@@ -38,54 +37,77 @@ class _TimerAppState extends State<TimerApp> {
     int minutes = secondsPassed ~/ 60;
     int hours = secondsPassed ~/ (60 * 60);
 
-    return Row(children:[
-      Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  height: 40,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(color: Colors.blue,
-                          height: 30,
-                          width: 80,
-                          child: Center(child: Text(hours.toString().padLeft(2, '0')+":"+minutes.toString().padLeft(2, '0')+":"+seconds.toString().padLeft(2, '0'))))
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  ElevatedButton(
-                      child: Text(isActive ? 'Pause' : 'START'),
-                      onPressed: () {
-                        setState(() {
-                          isActive = !isActive;
-                        });}),
-                  SizedBox(width: 20,),
-                  ElevatedButton(
-                      child: Text("Stop"),
-                      onPressed: () {
-                        setState(() {
-                          secondsPassed = 0;
-                          isActive = false;
-                          TimerApp.time = hours.toString().padLeft(2, '0')+":"+minutes.toString().padLeft(2, '0')+":"+seconds.toString().padLeft(2, '0');
-                          Fluttertoast.showToast(msg: "End Time:"+TimerApp.time);
-                        });}),
-                  SizedBox(width: 20,),
-                  ElevatedButton(
-                      child: Text("Restart"),
-                      onPressed: () {
-                        setState(() {
-                          secondsPassed = 0;
-                          isActive = true;
-                        });}),
-                ],)
-              ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          height: 40,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Container(
+                    color: Colors.blue,
+                    height: 30,
+                    width: 130,
+                    child: Center(
+                        child: Text(
+                      hours.toString().padLeft(2, '0') +
+                          ":" +
+                          minutes.toString().padLeft(2, '0') +
+                          ":" +
+                          seconds.toString().padLeft(2, '0'),
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ))),
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            ElevatedButton(
+                child: Text(isActive ? 'PAUSE' : 'START'),
+                onPressed: () {
+                  setState(() {
+                    isActive = !isActive;
+                  });
+                }),
+            SizedBox(
+              width: 20,
             ),
-          ),]);
+            ElevatedButton(
+                child: Text("STOP"),
+                onPressed: () {
+                  setState(() {
+                    secondsPassed = 0;
+                    isActive = false;
+                    TimerApp.time = hours.toString().padLeft(2, '0') +
+                        ":" +
+                        minutes.toString().padLeft(2, '0') +
+                        ":" +
+                        seconds.toString().padLeft(2, '0');
+                    Fluttertoast.showToast(msg: "End Time:" + TimerApp.time);
+                  });
+                }),
+            SizedBox(
+              width: 20,
+            ),
+            ElevatedButton(
+                child: Text("RESTART"),
+                onPressed: () {
+                  setState(() {
+                    secondsPassed = 0;
+                    isActive = true;
+                  });
+                }),
+          ],
+        )
+      ],
+    );
   }
 }

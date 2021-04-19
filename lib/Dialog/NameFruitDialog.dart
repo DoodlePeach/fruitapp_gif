@@ -26,12 +26,13 @@ class NameFruitDialog extends StatefulWidget {
 class _nameFruitDialog extends State<NameFruitDialog> {
   List<GridCard> list = [
     GridCard(
-        new GridCardModel("apple", "", basePath + paths["apple"]["image"])),
+        new GridCardModel("apple", "", basePath + details["apple"]["image"])),
     GridCard(
-        new GridCardModel("banana", "", basePath + paths["banana"]["image"])),
-    GridCard(new GridCardModel("pear", "", basePath + paths["pear"]["image"])),
+        new GridCardModel("banana", "", basePath + details["banana"]["image"])),
+    GridCard(
+        new GridCardModel("pear", "", basePath + details["pear"]["image"])),
     GridCard(new GridCardModel(
-        "watermelon", "", basePath + paths["watermelon"]["image"]))
+        "watermelon", "", basePath + details["watermelon"]["image"]))
   ];
 
   @override

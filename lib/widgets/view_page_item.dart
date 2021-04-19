@@ -45,7 +45,7 @@ class ViewPageItemWidget extends StatelessWidget {
                       child: Image.asset(basePath +
                           fruit.name.toLowerCase() +
                           "/" +
-                          paths[fruit.name.toLowerCase()]["variants"]
+                          details[fruit.name.toLowerCase()]["variants"]
                               [fruit.type.toLowerCase()]),
                     ),
                   ),

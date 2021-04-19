@@ -3,7 +3,6 @@ import 'package:fruitapp/models/calender_model.dart';
 import 'package:fruitapp/models/day_model.dart';
 import 'package:fruitapp/screens/calender.dart';
 import 'package:fruitapp/screens/day.dart';
-import 'package:fruitapp/screens/detail.dart';
 import 'package:fruitapp/screens/detail_tabs.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
