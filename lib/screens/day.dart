@@ -7,6 +7,8 @@ import 'package:fruitapp/widgets/appbar.dart';
 import 'package:fruitapp/widgets/view_page_item.dart';
 import 'package:provider/provider.dart';
 
+import 'statistics.dart';
+
 class DayPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -150,7 +152,6 @@ class DayPage extends StatelessWidget {
                 // After the dialog has been dismissed, clear the list of all
                 // selected fruits selected in the dialog.
                 SubNameFruitDialog.selectedList.clear(),
-
                 // In case the user added any fruits, refresh the current
                 // page's fruit lists.
                 Provider.of<FruitModel>(context, listen: false).refresh(

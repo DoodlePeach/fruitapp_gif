@@ -88,7 +88,7 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> {
                                 SubNameFruitDialog.selectedList[i].type,
                                 "",
                                 NameFruitDialog.date,
-                                null);
+                                null,null,null);
                             var result =
                                 await DatabaseQuery.db.newFruit(newFruit);
                             if (!result) {
