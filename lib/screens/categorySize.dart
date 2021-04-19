@@ -16,52 +16,64 @@ class _CategorySize extends State<CategorySize> {
   Widget build(BuildContext context) {
     return Row(children: [
       ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: widget.selected == "large" ? Colors.red : Colors.grey,
-            shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0),
+
+          style: ButtonStyle(
+            shape:MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0),
+              )),
+            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+                return widget.selected == "large" ? Colors.red : Colors.grey;
+                },
             ),
           ),
           child: Text(
             "large",
           ),
-          onPressed: () {
+          onPressed: widget.clickEnable? () {
             setState(() {
-              if (widget.clickEnable) widget.selected = "large";
+             widget.selected = "large";
             });
-          }),
+          }:null),
       SizedBox(
         width: 10,
       ),
       ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: widget.selected == "middle" ? Colors.red : Colors.grey,
-            shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0),
-            ),
-          ),
+          style: ButtonStyle(
+              shape:MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0),)),
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                  return widget.selected == "middle" ? Colors.red : Colors.grey;},)),
+
           child: Text("middle"),
-          onPressed: () {
+          onPressed: widget.clickEnable? () {
             setState(() {
-              if (widget.clickEnable) widget.selected = "middle";
+              widget.selected = "middle";
             });
-          }),
+          }:null
+      ),
+
       SizedBox(
         width: 10,
       ),
       ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: widget.selected == "light" ? Colors.red : Colors.grey,
-            shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0),
-            ),
-          ),
-          child: Text("light"),
-          onPressed: () {
-            setState(() {
-              if (widget.clickEnable) widget.selected = "light";
-            });
-          }),
+
+      style: ButtonStyle(
+      shape:MaterialStateProperty.all<RoundedRectangleBorder>(
+         RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0),)),
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) {
+            return widget.selected == "light" ? Colors.red : Colors.grey;},)),
+
+        child: Text("light"),
+        onPressed: widget.clickEnable? () {
+                setState(() {
+                  widget.selected = "light";
+                });
+              }:null
+      ),
+
     ]);
   }
 }
