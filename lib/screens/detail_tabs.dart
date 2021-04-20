@@ -138,7 +138,7 @@ class _DetailTabsPageState extends State<DetailTabsPage> {
                         if (!snapshot.hasData)
                           return Container(
                               child: Center(
-                            child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(),
                           ));
 
                         List<String> itemNumbers = [];

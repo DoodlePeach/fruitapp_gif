@@ -71,6 +71,7 @@ class _Statistics extends State<Statistics> {
                       )],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [LineChartWidget(spotList:noflSpot,yValues:noYValues)],),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -81,6 +82,7 @@ class _Statistics extends State<Statistics> {
                       )],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [Center(child: LineChartWidget(spotList:mlflSpot,yValues:mlYValues))],),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -91,6 +93,7 @@ class _Statistics extends State<Statistics> {
                       )],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [Center(child: LineChartWidget(spotList:kgflSpot,yValues:kgYValues))],),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
