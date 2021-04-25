@@ -1,3 +1,4 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/models/day_model.dart';
@@ -94,15 +95,64 @@ class _DetailPageState extends State<DetailPage> {
                                   ],
                                 ),
                                 Divider(),
+
+                                ExpandableNotifier(
+                                    child: Column(
+                                  children: [
+                                    Expandable(
+                                        collapsed: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 8, vertical: 2),
+                                              child: Text(
+                                                details[snapshot.data.name
+                                                    .toLowerCase()]["description"]
+                                                [snapshot.data.type.toLowerCase()],
+                                                softWrap: true,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            ExpandableButton(child: Icon(Icons.keyboard_arrow_down),)
+                                          ],
+                                        ),
+                                        expanded: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 8, vertical: 2),
+                                              child: Text(details[snapshot.data.name
+                                                  .toLowerCase()]["description"]
+                                              [snapshot.data.type.toLowerCase()]),
+                                            ),
+                                            ExpandableButton(child: Icon(Icons.keyboard_arrow_up),)
+                                          ],
+                                        ))
+                                  ],
+                                )),
+
+                                // ExpandablePanel(
+                                //     collapsed: Padding(
+                                //       padding: const EdgeInsets.symmetric(
+                                //           horizontal: 8, vertical: 2),
+                                //       child: Text(
+                                //         details[snapshot.data.name
+                                //                 .toLowerCase()]["description"]
+                                //             [snapshot.data.type.toLowerCase()],
+                                //         softWrap: true,
+                                //         maxLines: 2,
+                                //         overflow: TextOverflow.ellipsis,
+                                //       ),
+                                //     ),
+                                //     expanded: Padding(
+                                //       padding: const EdgeInsets.symmetric(
+                                //           horizontal: 8, vertical: 2),
+                                //       child: Text(details[snapshot.data.name
+                                //               .toLowerCase()]["description"]
+                                //           [snapshot.data.type.toLowerCase()]),
+                                //     )),
                                 // Description is static and stored in assets.dart
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 2),
-                                  child: Text(
-                                      details[snapshot.data.name.toLowerCase()]
-                                              ["description"]
-                                          [snapshot.data.type.toLowerCase()]),
-                                )
                               ],
                             ),
                           ),

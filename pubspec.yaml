@@ -35,7 +35,7 @@ dependencies:
   table_calendar: ^2.3.3
   provider: ^5.0.0
   flutter_countdown_timer: ^4.0.2
-
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:
