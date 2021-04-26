@@ -19,7 +19,7 @@ class _TimerAppState extends State<TimerApp> {
   Timer timer;
 
   void handleTick() {
-    if (isActive) {
+    if (isActive && mounted) {
       setState(() {
         secondsPassed = secondsPassed + 1;
       });

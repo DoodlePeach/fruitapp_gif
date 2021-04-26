@@ -43,7 +43,7 @@ class DayPage extends StatelessWidget {
                           // to appear there.
                           return Column(
                             children: [
-                              // Note: for all thes listviews, the following
+                              // Note: for all these list views, the following
                               // information is equally true:
 
                               // 1. physics: NeverScrollableScrollPhysics disables

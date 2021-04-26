@@ -22,25 +22,35 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
+  // This controller takes input from the user when they enter thier comments.
   TextEditingController _controller = new TextEditingController();
-  bool firstBuild = true;
   CategorySize categorySize;
 
   @override
   Widget build(BuildContext context) {
+    // Extract the arguments (i.e the fruit that has been selected) from the
+    // route.
     Fruit fruit = ModalRoute.of(context).settings.arguments;
-    fruit = Provider.of<FruitModel>(context, listen: false).getReference(fruit);
-    TimerApp.time = "00:00:00";
-    if (firstBuild) {
-      _controller.text = fruit.comment;
-      firstBuild = false;
-    }
+
+    TimerApp.time = fruit.time;
+
+    // Text field is initialized with the comments that may have been previously
+    // added by the user.
+    _controller.text = fruit.comment;
 
     return Consumer<FruitModel>(
       builder: (_, data, __) {
         return FutureBuilder(
+            // Every time the an update is performed in the database on the
+            // fruit, the Consumer remakes the FutureBuilder, which in turn
+            // reads the fruit from the database again.
+            // This helps in synchronization, otherwise what is actually present
+            // in the database and what is shown in the application may be
+            // different.
             future: DatabaseQuery.db.getFruit(fruit.id),
             builder: (context, snapshot) {
+              // Show an indeterminate progress indicator when no data has
+              // yet been fetched.
               if (!snapshot.hasData)
                 return Container(
                   child: Center(
@@ -70,6 +80,7 @@ class _DetailPageState extends State<DetailPage> {
                             padding: EdgeInsets.all(7),
                             child: Column(
                               children: [
+                                // Image paths are stored in assets.dart.
                                 Image.asset(
                                     basePath +
                                         snapshot.data.name.toLowerCase() +
@@ -94,8 +105,17 @@ class _DetailPageState extends State<DetailPage> {
                                             fontWeight: FontWeight.bold))
                                   ],
                                 ),
+
                                 Divider(),
 
+                                // Custom expandable widget from the
+                                // expandable package.
+                                // Basically a Column, with a text field
+                                // and a different icon depending upon the
+                                // collapsed state.
+                                // Expandable Notifier listens and
+                                // changes the state of
+                                // the widget whe Expandable Button is pressed.
                                 ExpandableNotifier(
                                     child: Column(
                                   children: [
@@ -103,56 +123,58 @@ class _DetailPageState extends State<DetailPage> {
                                         collapsed: Column(
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 8, vertical: 2),
-                                              child: Text(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 2),
+                                              child:
+                                                  // Unexpanded text field is clipped
+                                                  // at 2 lines.
+                                                  Text(
+                                                // Description is static and stored in assets.dart
                                                 details[snapshot.data.name
-                                                    .toLowerCase()]["description"]
-                                                [snapshot.data.type.toLowerCase()],
+                                                            .toLowerCase()]
+                                                        ["description"][
+                                                    snapshot.data.type
+                                                        .toLowerCase()],
                                                 softWrap: true,
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
-                                            ExpandableButton(child: Icon(Icons.keyboard_arrow_down),)
+                                            // Expandable button tells the
+                                            // expandable notifier to change
+                                            // states.
+                                            ExpandableButton(
+                                              child: Icon(
+                                                  Icons.keyboard_arrow_down),
+                                            )
                                           ],
                                         ),
                                         expanded: Column(
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 8, vertical: 2),
-                                              child: Text(details[snapshot.data.name
-                                                  .toLowerCase()]["description"]
-                                              [snapshot.data.type.toLowerCase()]),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 2),
+
+                                              // Description is static and stored in assets.dart
+                                              child: Text(details[snapshot
+                                                          .data.name
+                                                          .toLowerCase()]
+                                                      ["description"][
+                                                  snapshot.data.type
+                                                      .toLowerCase()]),
                                             ),
-                                            ExpandableButton(child: Icon(Icons.keyboard_arrow_up),)
+                                            ExpandableButton(
+                                              child:
+                                                  Icon(Icons.keyboard_arrow_up),
+                                            )
                                           ],
                                         ))
                                   ],
                                 )),
-
-                                // ExpandablePanel(
-                                //     collapsed: Padding(
-                                //       padding: const EdgeInsets.symmetric(
-                                //           horizontal: 8, vertical: 2),
-                                //       child: Text(
-                                //         details[snapshot.data.name
-                                //                 .toLowerCase()]["description"]
-                                //             [snapshot.data.type.toLowerCase()],
-                                //         softWrap: true,
-                                //         maxLines: 2,
-                                //         overflow: TextOverflow.ellipsis,
-                                //       ),
-                                //     ),
-                                //     expanded: Padding(
-                                //       padding: const EdgeInsets.symmetric(
-                                //           horizontal: 8, vertical: 2),
-                                //       child: Text(details[snapshot.data.name
-                                //               .toLowerCase()]["description"]
-                                //           [snapshot.data.type.toLowerCase()]),
-                                //     )),
-                                // Description is static and stored in assets.dart
                               ],
                             ),
                           ),
@@ -231,6 +253,8 @@ class _DetailPageState extends State<DetailPage> {
                           child: ElevatedButton(
                             child: Text("UPDATE"),
                             onPressed: () {
+                              // Update the data, then
+
                               snapshot.data.comment = _controller.text;
                               snapshot.data.categorySize =
                                   categorySize.selected;

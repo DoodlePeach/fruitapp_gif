@@ -11,21 +11,20 @@ import 'package:provider/provider.dart';
 
 import '../Fruit.dart';
 
-class DetailTabsPage extends StatefulWidget {
+class InformationPage extends StatefulWidget {
   @override
-  _DetailTabsPageState createState() => _DetailTabsPageState();
+  _InformationPageState createState() => _InformationPageState();
 }
 
-class _DetailTabsPageState extends State<DetailTabsPage> {
-  bool firstBuild = true;
+class _InformationPageState extends State<InformationPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Extract the arguments (i.e the fruit that has been selected) from the
+    // route.
     Fruit fruit = ModalRoute.of(context).settings.arguments;
-    fruit = Provider.of<FruitModel>(context, listen: false).getReference(fruit);
 
-    if (firstBuild) firstBuild = false;
-
+    // Default tab controller for tabs in information page.
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -141,6 +140,8 @@ class _DetailTabsPageState extends State<DetailTabsPage> {
                                 child: CircularProgressIndicator(),
                           ));
 
+                        // Extract lists of data that needs to be displayed in
+                        // the statistics page.
                         List<String> itemNumbers = [];
                         List<String> kgInItems = [];
                         List<String> mlInItems = [];
@@ -167,8 +168,3 @@ class _DetailTabsPageState extends State<DetailTabsPage> {
         ));
   }
 }
-//
-// List<String> itemNumbers = [];
-// List<String> kgInItems = [];
-// List<String> mlInItems = [];
-// String time = fruit.time;
