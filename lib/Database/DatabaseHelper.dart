@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
 import '../Fruit.dart';
 import '../MLKG.dart';
 
@@ -26,6 +27,7 @@ class DatabaseQuery {
           "name TEXT,"
           "type TEXT,"
           "comment TEXT,"
+          "gifPath TEXT,"
           "date TEXT,"
           "time TEXT,"
           "categorySize,"

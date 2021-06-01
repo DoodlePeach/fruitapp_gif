@@ -1,4 +1,6 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:expandable/expandable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fruitapp/Database/DatabaseHelper.dart';
 import 'package:fruitapp/models/day_model.dart';
@@ -24,6 +26,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   // This controller takes input from the user when they enter thier comments.
   TextEditingController _controller = new TextEditingController();
+  CarouselController _carouselController = new CarouselController();
   CategorySize categorySize;
 
   @override
@@ -48,7 +51,7 @@ class _DetailPageState extends State<DetailPage> {
             // in the database and what is shown in the application may be
             // different.
             future: DatabaseQuery.db.getFruit(fruit.id),
-            builder: (context, snapshot) {
+            builder: (context, AsyncSnapshot<Fruit> snapshot) {
               // Show an indeterminate progress indicator when no data has
               // yet been fetched.
               if (!snapshot.hasData)
@@ -57,6 +60,14 @@ class _DetailPageState extends State<DetailPage> {
                     child: CircularProgressIndicator(),
                   ),
                 );
+
+              String fruitName = snapshot.data.name.toLowerCase();
+              String fruitColor = snapshot.data.type.toLowerCase();
+
+              List<String> items =
+                  details[fruitName]["variants"].values.toList();
+
+              int index = items.indexOf(snapshot.data.gif);
 
               return SingleChildScrollView(
                 child: Container(
@@ -80,15 +91,49 @@ class _DetailPageState extends State<DetailPage> {
                             padding: EdgeInsets.all(7),
                             child: Column(
                               children: [
+                                Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    CarouselSlider(
+                                      carouselController: _carouselController,
+                                      options: CarouselOptions(
+                                          height: 220.0, initialPage: index),
+                                      items: items.map<Widget>((i) {
+                                        return Image.asset(
+                                            basePath + fruitName + "/" + i);
+                                      }).toList(),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          IconButton(
+                                              icon: Icon(Icons.chevron_left),
+                                              onPressed: () {
+                                                _carouselController
+                                                    .previousPage();
+                                              }),
+                                          IconButton(
+                                              icon: Icon(Icons.chevron_right),
+                                              onPressed: () {
+                                                _carouselController.nextPage();
+                                              }),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 // Image paths are stored in assets.dart.
-                                Image.asset(
-                                    basePath +
-                                        snapshot.data.name.toLowerCase() +
-                                        "/" +
-                                        details[snapshot.data.name
-                                                .toLowerCase()]["variants"]
-                                            [snapshot.data.type.toLowerCase()],
-                                    height: 220),
+                                // Image.asset(
+                                //     basePath +
+                                //         snapshot.data.name.toLowerCase() +
+                                //         "/" +
+                                //         details[snapshot.data.name
+                                //                 .toLowerCase()]["variants"]
+                                //             [snapshot.data.type.toLowerCase()],
+                                //     height: 220),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

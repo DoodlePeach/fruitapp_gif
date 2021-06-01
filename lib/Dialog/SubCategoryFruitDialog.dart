@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../Database/DatabaseHelper.dart';
+
 import '../Card/GridCard.dart';
-import 'NameFruitDialog.dart';
-import '../Fruit.dart';
 import '../Card/GridDataModel.dart';
+import '../Database/DatabaseHelper.dart';
+import '../Fruit.dart';
+import '../assets.dart';
+import 'NameFruitDialog.dart';
 
 class SubNameFruitDialog extends StatefulWidget {
   final List<GridCard> list;
@@ -31,10 +33,13 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Align(alignment: Alignment.topLeft,
-                child: GestureDetector( child:Icon(Icons.arrow_back) ,onTap:(){
-              Navigator.of(context).pop();})
-            ),
+            Align(
+                alignment: Alignment.topLeft,
+                child: GestureDetector(
+                    child: Icon(Icons.arrow_back),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    })),
             Center(
               child: Text(
                 widget.list[0].gridCardModel.name,
@@ -83,12 +88,22 @@ class _SnameFruitDialog extends State<SubNameFruitDialog> {
                               i++) {
                             print(SubNameFruitDialog.selectedList[i].type);
                             // Here We can add food which exist in selectedList by calling Database AddFruit Method
+
+                            String fruitName =
+                                SubNameFruitDialog.selectedList[i].name;
+                            String fruitType =
+                                SubNameFruitDialog.selectedList[i].type;
+
                             Fruit newFruit = new Fruit(
-                                SubNameFruitDialog.selectedList[i].name,
-                                SubNameFruitDialog.selectedList[i].type,
+                                fruitName,
+                                fruitType,
                                 "",
                                 NameFruitDialog.date,
-                                null,null,null);
+                                null,
+                                null,
+                                null,
+                                details[fruitName]["variants"]
+                                    [fruitType.toLowerCase()]);
                             var result =
                                 await DatabaseQuery.db.newFruit(newFruit);
                             if (!result) {

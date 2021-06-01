@@ -7,6 +7,7 @@ import 'package:fruitapp/models/fruit_model.dart';
 import 'package:fruitapp/screens/categorySize.dart';
 import 'package:fruitapp/widgets/mlkg.dart';
 import 'package:provider/provider.dart';
+
 import '../Fruit.dart';
 import 'mlkg_dialog.dart';
 
@@ -45,8 +46,7 @@ class ViewPageItemWidget extends StatelessWidget {
                       child: Image.asset(basePath +
                           fruit.name.toLowerCase() +
                           "/" +
-                          details[fruit.name.toLowerCase()]["variants"]
-                              [fruit.type.toLowerCase()]),
+                          fruit.gif),
                     ),
                   ),
                   flex: 2,

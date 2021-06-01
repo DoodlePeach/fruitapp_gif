@@ -18,16 +18,16 @@ final dummyDescription3 =
 // [description]s of each fruit varient.
 final Map details = {
   "watermelon": {
-    "image": "watermelon/1.png",
+    "image": "watermelon/1.gif",
     "variants": {
-      "red": "1.png",
-      "white": "2.png",
-      "green": "3.png",
-      "grey": "4.png",
-      "black": "5.png",
-      "blue": "6.png",
-      "orange": "7.png",
-      "yellow": "8.png"
+      "red": "1.gif",
+      "white": "2.gif",
+      "green": "3.gif",
+      "grey": "4.gif",
+      "black": "5.gif",
+      "blue": "6.gif",
+      "orange": "7.gif",
+      "yellow": "8.gif"
     },
     "description": {
       "red": dummyDescription1,
@@ -41,16 +41,16 @@ final Map details = {
     },
   },
   "apple": {
-    "image": "apple/1.png",
+    "image": "apple/1.gif",
     "variants": {
-      "red": "1.png",
-      "white": "2.png",
-      "green": "4.png",
-      "grey": "8.png",
-      "black": "5.png",
-      "blue": "7.png",
-      "orange": "6.png",
-      "yellow": "3.png"
+      "red": "1.gif",
+      "white": "2.gif",
+      "green": "4.gif",
+      "grey": "8.gif",
+      "black": "5.gif",
+      "blue": "7.gif",
+      "orange": "6.gif",
+      "yellow": "3.gif"
     },
     "description": {
       "red": dummyDescription1,
@@ -66,14 +66,14 @@ final Map details = {
   "banana": {
     "image": "banana/1.png",
     "variants": {
-      "red": "6.png",
-      "white": "4.png",
-      "green": "5.png",
-      "grey": "7.png",
-      "black": "3.png",
-      "blue": "8.png",
-      "orange": "2.png",
-      "yellow": "1.png"
+      "red": "6.gif",
+      "white": "4.gif",
+      "green": "5.gif",
+      "grey": "7.gif",
+      "black": "3.gif",
+      "blue": "8.gif",
+      "orange": "2.gif",
+      "yellow": "1.gif"
     },
     "description": {
       "red": dummyDescription1,
